@@ -3,16 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tool Độ Nhạy FF & DPI - Tất Cả Các Dòng Máy</title>
+    <title>Tool Độ Nhạy FF & DPI Chuẩn 100%</title>
     <style>
-        /* ==========================================
-           GIAO DIỆN MÀU ĐỎ GAMING (CỰC NGẦU)
-           ========================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        /* Giao diện màu đỏ Gaming */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: #0a0a0a;
             color: #ffffff;
@@ -72,8 +66,8 @@
             font-weight: bold;
         }
 
-        select, input {
-            padding: 14px;
+        select {
+            padding: 15px;
             border-radius: 8px;
             border: 1px solid #ff4d4d;
             background-color: #260000;
@@ -87,9 +81,20 @@
             -webkit-appearance: none;
         }
 
-        select:focus, input:focus {
+        select:focus {
             border-color: #ff0000;
             box-shadow: 0 0 15px #ff0000;
+        }
+
+        optgroup {
+            background-color: #1a0000;
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+
+        option {
+            background-color: #260000;
+            color: #ffffff;
         }
 
         button {
@@ -182,22 +187,113 @@
 
     <div class="container">
         <h1>🔥 TOOL ĐỘ NHẠY FF & DPI 🔥</h1>
-        <p class="subtitle">Cơ sở dữ liệu hàng ngàn dòng máy - Chuẩn xác 100%</p>
+        <p class="subtitle">Chọn đúng máy của bạn - Chuẩn xác 100%</p>
         
         <div class="input-group">
-            <label>📱 Chọn phân khúc máy của bạn:</label>
-            <select id="tierSelect" onchange="updateModelList()">
-                <option value="">-- Chọn phân khúc --</option>
-                <option value="lag">Máy Yếu / Lag (Cấu hình thấp)</option>
-                <option value="medium">Máy Tầm Trung / Vừa (Cân bằng)</option>
-                <option value="smooth">Máy Khỏe / Mượt (Cao cấp, Gaming)</option>
-            </select>
+            <label>📱 Chọn dòng máy của bạn (Chia theo phân khúc):</label>
+            <select id="deviceSelect">
+                <option value="">-- Bấm vào đây để chọn máy --</option>
+                
+                <!-- PHÂN KHÚC MÁY YẾU / LAG -->
+                <optgroup label="🔥 MÁY YẾU / LAG (Cấu hình thấp)">
+                    <option value="samsung_a10">Samsung Galaxy A10</option>
+                    <option value="samsung_a12">Samsung Galaxy A12</option>
+                    <option value="samsung_a02">Samsung Galaxy A02</option>
+                    <option value="samsung_j7">Samsung Galaxy J7</option>
+                    <option value="redmi_9a">Xiaomi Redmi 9A</option>
+                    <option value="redmi_9c">Xiaomi Redmi 9C</option>
+                    <option value="redmi_10a">Xiaomi Redmi 10A</option>
+                    <option value="oppo_a12">Oppo A12</option>
+                    <option value="oppo_a15">Oppo A15</option>
+                    <option value="oppo_a16">Oppo A16</option>
+                    <option value="vivo_y12">Vivo Y12</option>
+                    <option value="vivo_y15">Vivo Y15</option>
+                    <option value="vivo_y20">Vivo Y20</option>
+                    <option value="realme_c11">Realme C11</option>
+                    <option value="realme_c12">Realme C12</option>
+                    <option value="realme_c15">Realme C15</option>
+                    <option value="nokia_24">Nokia 2.4</option>
+                    <option value="nokia_34">Nokia 3.4</option>
+                    <option value="iphone_6">iPhone 6</option>
+                    <option value="iphone_6s">iPhone 6s</option>
+                    <option value="iphone_7">iPhone 7</option>
+                    <option value="iphone_7p">iPhone 7 Plus</option>
+                    <option value="iphone_8">iPhone 8</option>
+                    <option value="lag_khac">Máy Yếu Khác (Tự động)</option>
+                </optgroup>
 
-            <label>🔍 Chọn đúng dòng máy của bạn:</label>
-            <select id="modelSelect">
-                <option value="">-- Vui lòng chọn phân khúc trước --</option>
-            </select>
+                <!-- PHÂN KHÚC MÁY TẦM TRUNG -->
+                <optgroup label="⚡ MÁY TẦM TRUNG / VỪA">
+                    <option value="samsung_a52">Samsung Galaxy A52</option>
+                    <option value="samsung_a53">Samsung Galaxy A53</option>
+                    <option value="samsung_a54">Samsung Galaxy A54</option>
+                    <option value="samsung_a71">Samsung Galaxy A71</option>
+                    <option value="samsung_a72">Samsung Galaxy A72</option>
+                    <option value="samsung_m31">Samsung Galaxy M31</option>
+                    <option value="samsung_m52">Samsung Galaxy M52</option>
+                    <option value="redmi_note11">Xiaomi Redmi Note 11</option>
+                    <option value="redmi_note12">Xiaomi Redmi Note 12</option>
+                    <option value="redmi_note13">Xiaomi Redmi Note 13</option>
+                    <option value="redmi_note10pro">Xiaomi Redmi Note 10 Pro</option>
+                    <option value="poco_x3">Xiaomi Poco X3</option>
+                    <option value="poco_x5">Xiaomi Poco X5</option>
+                    <option value="poco_m4pro">Xiaomi Poco M4 Pro</option>
+                    <option value="oppo_reno6">Oppo Reno 6</option>
+                    <option value="oppo_reno7">Oppo Reno 7</option>
+                    <option value="oppo_reno8">Oppo Reno 8</option>
+                    <option value="oppo_a57">Oppo A57</option>
+                    <option value="oppo_a58">Oppo A58</option>
+                    <option value="vivo_y21">Vivo Y21</option>
+                    <option value="vivo_y35">Vivo Y35</option>
+                    <option value="vivo_y55">Vivo Y55</option>
+                    <option value="realme_c55">Realme C55</option>
+                    <option value="realme_8">Realme 8</option>
+                    <option value="realme_9pro">Realme 9 Pro</option>
+                    <option value="iphone_xr">iPhone XR</option>
+                    <option value="iphone_x">iPhone X</option>
+                    <option value="iphone_xs">iPhone XS</option>
+                    <option value="iphone_11">iPhone 11</option>
+                    <option value="iphone_11pm">iPhone 11 Pro Max</option>
+                    <option value="medium_khac">Máy Tầm Trung Khác (Tự động)</option>
+                </optgroup>
 
+                <!-- PHÂN KHÚC MÁY KHỎE / MƯỢT -->
+                <optgroup label="🚀 MÁY KHỎE / MƯỢT (Cao cấp, Gaming)">
+                    <option value="iphone_15pm">iPhone 15 Pro Max</option>
+                    <option value="iphone_15p">iPhone 15 Pro</option>
+                    <option value="iphone_15">iPhone 15</option>
+                    <option value="iphone_14pm">iPhone 14 Pro Max</option>
+                    <option value="iphone_14p">iPhone 14 Pro</option>
+                    <option value="iphone_14">iPhone 14</option>
+                    <option value="iphone_13pm">iPhone 13 Pro Max</option>
+                    <option value="iphone_13p">iPhone 13 Pro</option>
+                    <option value="iphone_13">iPhone 13</option>
+                    <option value="iphone_12pm">iPhone 12 Pro Max</option>
+                    <option value="iphone_12">iPhone 12</option>
+                    <option value="samsung_s24u">Samsung Galaxy S24 Ultra</option>
+                    <option value="samsung_s23u">Samsung Galaxy S23 Ultra</option>
+                    <option value="samsung_s23">Samsung Galaxy S23</option>
+                    <option value="samsung_s22u">Samsung Galaxy S22 Ultra</option>
+                    <option value="samsung_s22">Samsung Galaxy S22</option>
+                    <option value="samsung_s21u">Samsung Galaxy S21 Ultra</option>
+                    <option value="samsung_s21">Samsung Galaxy S21</option>
+                    <option value="samsung_s20u">Samsung Galaxy S20 Ultra</option>
+                    <option value="samsung_s20">Samsung Galaxy S20</option>
+                    <option value="samsung_n20u">Samsung Galaxy Note 20 Ultra</option>
+                    <option value="samsung_n10">Samsung Galaxy Note 10</option>
+                    <option value="xiaomi_13pro">Xiaomi 13 Pro</option>
+                    <option value="xiaomi_13">Xiaomi 13</option>
+                    <option value="xiaomi_12">Xiaomi 12</option>
+                    <option value="poco_f5">Xiaomi Poco F5</option>
+                    <option value="poco_f4">Xiaomi Poco F4</option>
+                    <option value="nubia_neo3g">Nubia Neo 3G</option>
+                    <option value="nubia_rm8pro">Nubia Red Magic 8 Pro</option>
+                    <option value="nubia_rm7">Nubia Red Magic 7</option>
+                    <option value="rog_6">Asus ROG Phone 6</option>
+                    <option value="rog_5">Asus ROG Phone 5</option>
+                    <option value="smooth_khac">Máy Cao Cấp Khác (Tự động)</option>
+                </optgroup>
+            </select>
             <button onclick="calculateSettings()">TÍNH CÀI ĐẶT CHUẨN</button>
         </div>
 
@@ -210,164 +306,125 @@
             <div class="stat-row"><span>AWM Scope:</span> <span id="awm">0</span></div>
             <div class="stat-row"><span>Free Look:</span> <span id="freeLook">0</span></div>
             <div class="dpi-box">DPI ĐỀ XUẤT: <span id="dpi">0</span></div>
-            <p class="note">* Độ nhạy chuẩn được tính toán dựa trên phần cứng và tối ưu cho game thủ Free Fire. Hãy vào sân tập để tinh chỉnh theo cảm giác tay.</p>
+            <p class="note">* Độ nhạy chuẩn được tính toán dựa trên phần cứng. Hãy vào sân tập để tinh chỉnh theo cảm giác tay.</p>
         </div>
     </div>
 
     <script>
         // ==========================================
-        // DATABASE ĐỘ NHẠY CHUẨN TỪNG DÒNG MÁY (PHÂN LOẠI 3 CẤP ĐỘ)
+        // DATABASE ĐỘ NHẠY CHUẨN TỪNG DÒNG MÁY
         // ==========================================
         const phoneDatabase = {
-            // ==========================================
-            // PHÂN KHÚC 1: MÁY YẾU / LAG (Cấu hình thấp, màn 60Hz, RAM 3-4GB)
-            // Đặc điểm: Cần độ nhạy thấp để bù lại việc máy xử lý chậm, tránh giật lag khi xoay người.
-            // ==========================================
-            "lag": {
-                "Samsung Galaxy A10": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
-                "Samsung Galaxy A12": { g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
-                "Samsung Galaxy A02": { g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
-                "Samsung Galaxy J7": { g: 65, rd: 62, s2: 58, s4: 54, awm: 50, fl: 62, dpi: 380 },
-                "Xiaomi Redmi 9A": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
-                "Xiaomi Redmi 9C": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
-                "Xiaomi Redmi 10A": { g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
-                "Oppo A12": { g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
-                "Oppo A15": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
-                "Oppo A16": { g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
-                "Vivo Y12": { g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
-                "Vivo Y15": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
-                "Vivo Y20": { g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
-                "Realme C11": { g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
-                "Realme C12": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
-                "Realme C15": { g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
-                "Nokia 2.4": { g: 65, rd: 62, s2: 58, s4: 54, awm: 50, fl: 62, dpi: 380 },
-                "Nokia 3.4": { g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
-                "iPhone 6": { g: 65, rd: 62, s2: 58, s4: 54, awm: 50, fl: 62, dpi: 380 },
-                "iPhone 6s": { g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
-                "iPhone 7": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
-                "iPhone 7 Plus": { g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
-                "iPhone 8": { g: 74, rd: 72, s2: 66, s4: 62, awm: 58, fl: 72, dpi: 420 },
-                "Máy Yếu Khác (Tự động)": { g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 }
-            },
+            // --- MÁY YẾU / LAG ---
+            "samsung_a10": { name: "Samsung Galaxy A10", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
+            "samsung_a12": { name: "Samsung Galaxy A12", g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
+            "samsung_a02": { name: "Samsung Galaxy A02", g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
+            "samsung_j7": { name: "Samsung Galaxy J7", g: 65, rd: 62, s2: 58, s4: 54, awm: 50, fl: 62, dpi: 380 },
+            "redmi_9a": { name: "Xiaomi Redmi 9A", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
+            "redmi_9c": { name: "Xiaomi Redmi 9C", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
+            "redmi_10a": { name: "Xiaomi Redmi 10A", g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
+            "oppo_a12": { name: "Oppo A12", g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
+            "oppo_a15": { name: "Oppo A15", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
+            "oppo_a16": { name: "Oppo A16", g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
+            "vivo_y12": { name: "Vivo Y12", g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
+            "vivo_y15": { name: "Vivo Y15", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
+            "vivo_y20": { name: "Vivo Y20", g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
+            "realme_c11": { name: "Realme C11", g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
+            "realme_c12": { name: "Realme C12", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
+            "realme_c15": { name: "Realme C15", g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
+            "nokia_24": { name: "Nokia 2.4", g: 65, rd: 62, s2: 58, s4: 54, awm: 50, fl: 62, dpi: 380 },
+            "nokia_34": { name: "Nokia 3.4", g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
+            "iphone_6": { name: "iPhone 6", g: 65, rd: 62, s2: 58, s4: 54, awm: 50, fl: 62, dpi: 380 },
+            "iphone_6s": { name: "iPhone 6s", g: 68, rd: 65, s2: 60, s4: 55, awm: 52, fl: 65, dpi: 390 },
+            "iphone_7": { name: "iPhone 7", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
+            "iphone_7p": { name: "iPhone 7 Plus", g: 72, rd: 70, s2: 64, s4: 60, awm: 56, fl: 70, dpi: 410 },
+            "iphone_8": { name: "iPhone 8", g: 74, rd: 72, s2: 66, s4: 62, awm: 58, fl: 72, dpi: 420 },
+            "lag_khac": { name: "Máy Yếu Khác", g: 70, rd: 68, s2: 62, s4: 58, awm: 55, fl: 68, dpi: 400 },
 
-            // ==========================================
-            // PHÂN KHÚC 2: MÁY TẦM TRUNG / VỪA (Cấu hình khá, màn 60-90Hz, RAM 4-6GB)
-            // Đặc điểm: Cân bằng giữa độ nhạy và hiệu năng, phù hợp với đa số game thủ.
-            // ==========================================
-            "medium": {
-                "Samsung Galaxy A52": { g: 85, rd: 80, s2: 75, s4: 70, awm: 65, fl: 80, dpi: 460 },
-                "Samsung Galaxy A53": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 470 },
-                "Samsung Galaxy A54": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 480 },
-                "Samsung Galaxy A71": { g: 87, rd: 84, s2: 77, s4: 73, awm: 67, fl: 84, dpi: 475 },
-                "Samsung Galaxy A72": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 480 },
-                "Samsung Galaxy M31": { g: 85, rd: 80, s2: 75, s4: 70, awm: 65, fl: 80, dpi: 460 },
-                "Samsung Galaxy M52": { g: 87, rd: 84, s2: 77, s4: 73, awm: 67, fl: 84, dpi: 475 },
-                "Xiaomi Redmi Note 11": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
-                "Xiaomi Redmi Note 12": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
-                "Xiaomi Redmi Note 13": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
-                "Xiaomi Redmi Note 10 Pro": { g: 89, rd: 86, s2: 79, s4: 75, awm: 69, fl: 86, dpi: 505 },
-                "Xiaomi Poco X3": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
-                "Xiaomi Poco X5": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 530 },
-                "Xiaomi Poco M4 Pro": { g: 87, rd: 84, s2: 77, s4: 73, awm: 67, fl: 84, dpi: 490 },
-                "Oppo Reno 6": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 490 },
-                "Oppo Reno 7": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
-                "Oppo Reno 8": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
-                "Oppo A57": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
-                "Oppo A58": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 460 },
-                "Vivo Y21": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
-                "Vivo Y35": { g: 85, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 460 },
-                "Vivo Y55": { g: 86, rd: 83, s2: 77, s4: 73, awm: 67, fl: 83, dpi: 470 },
-                "Realme C55": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 450 },
-                "Realme 8": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
-                "Realme 9 Pro": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
-                "iPhone XR": { g: 88, rd: 85, s2: 80, s4: 75, awm: 70, fl: 85, dpi: 500 },
-                "iPhone X": { g: 87, rd: 85, s2: 79, s4: 75, awm: 70, fl: 85, dpi: 500 },
-                "iPhone XS": { g: 88, rd: 86, s2: 80, s4: 76, awm: 71, fl: 86, dpi: 510 },
-                "iPhone 11": { g: 90, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
-                "iPhone 11 Pro Max": { g: 91, rd: 89, s2: 83, s4: 79, awm: 73, fl: 89, dpi: 530 },
-                "Máy Tầm Trung Khác (Tự động)": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 }
-            },
+            // --- MÁY TẦM TRUNG / VỪA ---
+            "samsung_a52": { name: "Samsung Galaxy A52", g: 85, rd: 80, s2: 75, s4: 70, awm: 65, fl: 80, dpi: 460 },
+            "samsung_a53": { name: "Samsung Galaxy A53", g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 470 },
+            "samsung_a54": { name: "Samsung Galaxy A54", g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 480 },
+            "samsung_a71": { name: "Samsung Galaxy A71", g: 87, rd: 84, s2: 77, s4: 73, awm: 67, fl: 84, dpi: 475 },
+            "samsung_a72": { name: "Samsung Galaxy A72", g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 480 },
+            "samsung_m31": { name: "Samsung Galaxy M31", g: 85, rd: 80, s2: 75, s4: 70, awm: 65, fl: 80, dpi: 460 },
+            "samsung_m52": { name: "Samsung Galaxy M52", g: 87, rd: 84, s2: 77, s4: 73, awm: 67, fl: 84, dpi: 475 },
+            "redmi_note11": { name: "Redmi Note 11", g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
+            "redmi_note12": { name: "Redmi Note 12", g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "redmi_note13": { name: "Redmi Note 13", g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
+            "redmi_note10pro": { name: "Redmi Note 10 Pro", g: 89, rd: 86, s2: 79, s4: 75, awm: 69, fl: 86, dpi: 505 },
+            "poco_x3": { name: "Poco X3", g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
+            "poco_x5": { name: "Poco X5", g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 530 },
+            "poco_m4pro": { name: "Poco M4 Pro", g: 87, rd: 84, s2: 77, s4: 73, awm: 67, fl: 84, dpi: 490 },
+            "oppo_reno6": { name: "Oppo Reno 6", g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 490 },
+            "oppo_reno7": { name: "Oppo Reno 7", g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
+            "oppo_reno8": { name: "Oppo Reno 8", g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "oppo_a57": { name: "Oppo A57", g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
+            "oppo_a58": { name: "Oppo A58", g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 460 },
+            "vivo_y21": { name: "Vivo Y21", g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
+            "vivo_y35": { name: "Vivo Y35", g: 85, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 460 },
+            "vivo_y55": { name: "Vivo Y55", g: 86, rd: 83, s2: 77, s4: 73, awm: 67, fl: 83, dpi: 470 },
+            "realme_c55": { name: "Realme C55", g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 450 },
+            "realme_8": { name: "Realme 8", g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
+            "realme_9pro": { name: "Realme 9 Pro", g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "iphone_xr": { name: "iPhone XR", g: 88, rd: 85, s2: 80, s4: 75, awm: 70, fl: 85, dpi: 500 },
+            "iphone_x": { name: "iPhone X", g: 87, rd: 85, s2: 79, s4: 75, awm: 70, fl: 85, dpi: 500 },
+            "iphone_xs": { name: "iPhone XS", g: 88, rd: 86, s2: 80, s4: 76, awm: 71, fl: 86, dpi: 510 },
+            "iphone_11": { name: "iPhone 11", g: 90, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
+            "iphone_11pm": { name: "iPhone 11 Pro Max", g: 91, rd: 89, s2: 83, s4: 79, awm: 73, fl: 89, dpi: 530 },
+            "medium_khac": { name: "Máy Tầm Trung Khác", g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
 
-            // ==========================================
-            // PHÂN KHÚC 3: MÁY MƯỢT / CAO CẤP (Flagship, Gaming, màn 120Hz+, RAM 8GB+)
-            // Đặc điểm: Độ nhạy cao, DPI lớn để tận dụng tối đa sức mạnh phần cứng, cho cảm giác cực mượt.
-            // ==========================================
-            "smooth": {
-                "iPhone 15 Pro Max": { g: 100, rd: 100, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 650 },
-                "iPhone 15 Pro": { g: 100, rd: 98, s2: 94, s4: 88, awm: 84, fl: 98, dpi: 640 },
-                "iPhone 15": { g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 600 },
-                "iPhone 14 Pro Max": { g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 620 },
-                "iPhone 14 Pro": { g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 610 },
-                "iPhone 14": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 580 },
-                "iPhone 13 Pro Max": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 600 },
-                "iPhone 13 Pro": { g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 590 },
-                "iPhone 13": { g: 95, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
-                "iPhone 12 Pro Max": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 560 },
-                "iPhone 12": { g: 92, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
-                "Samsung Galaxy S24 Ultra": { g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 580 },
-                "Samsung Galaxy S23 Ultra": { g: 96, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
-                "Samsung Galaxy S23": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 550 },
-                "Samsung Galaxy S22 Ultra": { g: 95, rd: 92, s2: 87, s4: 82, awm: 77, fl: 92, dpi: 560 },
-                "Samsung Galaxy S22": { g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 550 },
-                "Samsung Galaxy S21 Ultra": { g: 93, rd: 89, s2: 84, s4: 79, awm: 74, fl: 89, dpi: 540 },
-                "Samsung Galaxy S21": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
-                "Samsung Galaxy S20 Ultra": { g: 91, rd: 87, s2: 81, s4: 77, awm: 71, fl: 87, dpi: 520 },
-                "Samsung Galaxy S20": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
-                "Samsung Galaxy Note 20 Ultra": { g: 93, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
-                "Samsung Galaxy Note 10": { g: 89, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
-                "Xiaomi 13 Pro": { g: 97, rd: 95, s2: 91, s4: 85, awm: 81, fl: 95, dpi: 580 },
-                "Xiaomi 13": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 570 },
-                "Xiaomi 12": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi:  {550 },
-                "Xiaomi Poco F5": { g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, g dpi: 550 },
-                "Xiaomi Poco F4":: 92, rd: 88, s2: 83, s4: 78, awm: 73, fl: 88, dpi: 530 },
-                "Nubia Red Magic 8 Pro": { g: 100, rd: 98, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 650 },
-                "Nubia Red Magic 7": { g: 98, rd: 95, s2: 92, s4: 88, awm: 82, fl: 98, dpi: 620 },
-                "Nubia Neo 3G": { g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 560 },
-                "Asus ROG Phone 6": { g: 100, rd: 98, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 600 },
-                "Asus ROG Phone 5": { g: 98, rd: 95, s2: 92, s4: 88, awm: 82, fl: 98, dpi: 580 },
-                "Máy Cao Cấp Khác (Tự động)": { g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 560 }
-            }
+            // --- MÁY KHỎE / MƯỢT ---
+            "iphone_15pm": { name: "iPhone 15 Pro Max", g: 100, rd: 100, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 650 },
+            "iphone_15p": { name: "iPhone 15 Pro", g: 100, rd: 98, s2: 94, s4: 88, awm: 84, fl: 98, dpi: 640 },
+            "iphone_15": { name: "iPhone 15", g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 600 },
+            "iphone_14pm": { name: "iPhone 14 Pro Max", g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 620 },
+            "iphone_14p": { name: "iPhone 14 Pro", g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 610 },
+            "iphone_14": { name: "iPhone 14", g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 580 },
+            "iphone_13pm": { name: "iPhone 13 Pro Max", g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 600 },
+            "iphone_13p": { name: "iPhone 13 Pro", g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 590 },
+            "iphone_13": { name: "iPhone 13", g: 95, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
+            "iphone_12pm": { name: "iPhone 12 Pro Max", g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 560 },
+            "iphone_12": { name: "iPhone 12", g: 92, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
+            "samsung_s24u": { name: "Samsung S24 Ultra", g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 580 },
+            "samsung_s23u": { name: "Samsung S23 Ultra", g: 96, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
+            "samsung_s23": { name: "Samsung S23", g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 550 },
+            "samsung_s22u": { name: "Samsung S22 Ultra", g: 95, rd: 92, s2: 87, s4: 82, awm: 77, fl: 92, dpi: 560 },
+            "samsung_s22": { name: "Samsung S22", g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 550 },
+            "samsung_s21u": { name: "Samsung S21 Ultra", g: 93, rd: 89, s2: 84, s4: 79, awm: 74, fl: 89, dpi: 540 },
+            "samsung_s21": { name: "Samsung S21", g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
+            "samsung_s20u": { name: "Samsung S20 Ultra", g: 91, rd: 87, s2: 81, s4: 77, awm: 71, fl: 87, dpi: 520 },
+            "samsung_s20": { name: "Samsung S20", g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "samsung_n20u": { name: "Samsung Note 20 Ultra", g: 93, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
+            "samsung_n10": { name: "Samsung Note 10", g: 89, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "xiaomi_13pro": { name: "Xiaomi 13 Pro", g: 97, rd: 95, s2: 91, s4: 85, awm: 81, fl: 95, dpi: 580 },
+            "xiaomi_13": { name: "Xiaomi 13", g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 570 },
+            "xiaomi_12": { name: "Xiaomi 12", g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 550 },
+            "poco_f5": { name: "Poco F5", g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 550 },
+            "poco_f4": { name: "Poco F4", g: 92, rd: 88, s2: 83, s4: 78, awm: 73, fl: 88, dpi: 530 },
+            "nubia_neo3g": { name: "Nubia Neo 3G", g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 560 },
+            "nubia_rm8pro": { name: "Nubia Red Magic 8 Pro", g: 100, rd: 98, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 650 },
+            "nubia_rm7": { name: "Nubia Red Magic 7", g: 98, rd: 95, s2: 92, s4: 88, awm: 82, fl: 98, dpi: 620 },
+            "rog_6": { name: "Asus ROG Phone 6", g: 100, rd: 98, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 600 },
+            "rog_5": { name: "Asus ROG Phone 5", g: 98, rd: 95, s2: 92, s4: 88, awm: 82, fl: 98, dpi: 580 },
+            "smooth_khac": { name: "Máy Cao Cấp Khác", g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 560 }
         };
-
-        // ==========================================
-        // HÀM CẬP NHẬT DANH SÁCH MÁY THEO PHÂN KHÚC
-        // ==========================================
-        function updateModelList() {
-            const tier = document.getElementById('tierSelect').value;
-            const modelSelect = document.getElementById('modelSelect');
-            
-            // Xóa danh sách cũ
-            modelSelect.innerHTML = '<option value="">-- Chọn dòng máy --</option>';
-
-            if (!tier || !phoneDatabase[tier]) {
-                modelSelect.innerHTML = '<option value="">-- Vui lòng chọn phân khúc --</option>';
-                return;
-            }
-
-            // Duyệt qua Database và thêm vào Dropdown
-            for (let model in phoneDatabase[tier]) {
-                let option = document.createElement('option');
-                option.value = model;
-                option.text = model;
-                modelSelect.appendChild(option);
-            }
-        }
 
         // ==========================================
         // HÀM TÍNH TOÁN VÀ HIỂN THỊ KẾT QUẢ
         // ==========================================
         function calculateSettings() {
-            const tier = document.getElementById('tierSelect').value;
-            const model = document.getElementById('modelSelect').value;
+            const select = document.getElementById('deviceSelect');
+            const selectedId = select.value;
             const resultBox = document.getElementById('result');
             
-            if (!tier || !model) {
-                alert("Vui lòng chọn đầy đủ Phân khúc và Dòng máy của bạn!");
+            if (!selectedId) {
+                alert("Vui lòng chọn dòng máy của bạn trong danh sách!");
                 return;
             }
 
             // Lấy dữ liệu từ Database
-            const settings = phoneDatabase[tier][model];
+            const settings = phoneDatabase[selectedId];
 
             if (!settings) {
                 alert("Có lỗi xảy ra, vui lòng thử lại!");
@@ -375,7 +432,7 @@
             }
 
             // Hiển thị kết quả
-            document.getElementById('deviceName').innerText = `✅ CHUẨN: ${model}`;
+            document.getElementById('deviceName').innerText = `✅ CHUẨN: ${settings.name}`;
             document.getElementById('general').innerText = settings.g;
             document.getElementById('redDot').innerText = settings.rd;
             document.getElementById('scope2x').innerText = settings.s2;
