@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tool Độ Nhạy FF & DPI Chuẩn Xác</title>
+    <title>Tool Độ Nhạy FF & DPI</title>
     <style>
         /* Giao diện màu đỏ Gaming */
         body {
@@ -39,7 +39,7 @@
         h1 {
             color: #ff3333;
             text-transform: uppercase;
-            font-size: 19px;
+            font-size: 20px;
             margin-bottom: 20px;
             text-shadow: 0 0 12px #ff0000;
             letter-spacing: 1px;
@@ -52,21 +52,8 @@
             margin-bottom: 20px;
         }
 
-        .input-box {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .input-box label {
-            font-size: 13px;
-            color: #ff9999;
-            margin-bottom: 5px;
-            margin-left: 5px;
-        }
-
-        input, select {
-            padding: 12px;
+        input {
+            padding: 15px;
             border-radius: 8px;
             border: 1px solid #ff4d4d;
             background-color: #260000;
@@ -74,11 +61,10 @@
             font-size: 16px;
             outline: none;
             transition: 0.3s;
-            width: 100%;
-            box-sizing: border-box;
+            text-align: center;
         }
 
-        input:focus, select:focus {
+        input:focus {
             border-color: #ff0000;
             box-shadow: 0 0 15px #ff0000;
         }
@@ -95,7 +81,6 @@
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(255, 0, 0, 0.6);
-            margin-top: 10px;
         }
 
         button:active {
@@ -120,7 +105,7 @@
 
         .result-box h2 {
             color: #ff4d4d;
-            font-size: 15px;
+            font-size: 16px;
             margin-top: 0;
             border-bottom: 1px solid #ff3333;
             padding-bottom: 10px;
@@ -154,11 +139,10 @@
             box-shadow: 0 0 15px #cc0000;
         }
 
-        .note {
-            font-size: 11px;
-            color: #ff6666;
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 14px;
             margin-top: 10px;
-            text-align: center;
             font-style: italic;
         }
     </style>
@@ -166,52 +150,15 @@
 <body>
 
     <div class="container">
-        <h1>🔥 Tool Độ Nhạy FF & DPIung 🔥</h1>
-        <p style="font-size: 12px; color: #ff9999; margin-top: -10px; margin-bottom: 15px;">Nhập thông số máy để tính toán cấu hình chuẩn xác 100%</p>
+        <h1>🔥 Tool Độ Nhạy FF & DPI 🔥</h1>
         
         <div class="input-group">
-            <!-- Kích thước màn cao hình -->
-            <div class="input-box">
-                <label>📏 Kích thước màn hình (inch)</label>
-                <input type=")</number" id="screenSize" placeholder="VD: 6.1, 6.7, 6.8" step="0.1" value="6.5option">
-            </div>
-
-            <!-- Tần số quét -->
-            <div class="input-box">
-                <label>⚡ Tần số quét m>
-àn hình (Hz)</label>
-                <select id="refreshRate">
-                    <option value="60">60Hz (Máy cũ, phổ thông)</option                   >
-                    <option value="90">90Hz (Tầm trung)</option>
-                    <option value="120" selected>120Hz (Flagship, tầm tr <option value="144">144Hz (Gaming)</option>
-                    <option value="165">165Hz (Gaming cao cấp)</option>
-                </select>
-            </div>
-
-            <!-- Tần số lấy mẫu cảm ứng -->
-            <div class="input-box">
-                <label>👆 Tần số lấy mẫu cảm ứng (Touch Sampling)</label>
-                <select id="touchSampling">
-                    <option value="120">120Hz (Máy phổ thông)</option>
-                    <option value="180">180Hz (Tầm trung)</option>
-                    <option value="240" selected>240Hz (Tầm trung cao, Flagship)</option>
-                    <option value="360">360Hz (Flagship cao cấp)</option>
-                    <option value="480">480Hz (Gaming chuyên dụng)</option>
-                    <option value="720">720Hz (Gaming siêu cao cấp)</option>
-                </select>
-            </div>
-
-            <!-- DPI -->
-            <div class="input-box">
-                <label>🔍 Độ phân giải / DPI</label>
-                <input type="number" id="dpiInput" placeholder="VD: 400, 480, 560" value="450">
-            </div>
-
-            <button onclick="calculateSettings()">TÍNH CÀI ĐẶT CHUẨN</button>
+            <input type="text" id="deviceInput" placeholder="Nhập tên máy (VD: iPhone 13, Samsung S10e...)">
+            <button onclick="getSettings()">TÌM CÀI ĐẶT CHUẨN</button>
         </div>
 
         <div id="result" class="result-box">
-            <h2 id="deviceName">Kết quả tính toán</h2>
+            <h2 id="deviceName">Tên máy</h2>
             <div class="stat-row"><span>General:</span> <span id="general">0</span></div>
             <div class="stat-row"><span>Red Dot:</span> <span id="redDot">0</span></div>
             <div class="stat-row"><span>2x Scope:</span> <span id="scope2x">0</span></div>
@@ -219,100 +166,151 @@
             <div class="stat-row"><span>AWM Scope:</span> <span id="awm">0</span></div>
             <div class="stat-row"><span>Free Look:</span> <span id="freeLook">0</span></div>
             <div class="dpi-box">DPI ĐỀ XUẤT: <span id="dpi">0</span></div>
-            <p class="note">* Cấu hình được tính toán dựa trên thuật toán phần cứng, đảm bảo chuẩn xác cho từng dòng máy.</p>
         </div>
+        <div id="errorBox" class="error-msg" style="display: none;"></div>
     </div>
 
     <script>
         // ==========================================
-        // THUẬT TOÁN TÍNH ĐỘ NHẠY DỰA TRÊN PHẦN CỨNG
+        // DATABASE ĐỘ NHẠY CHUẨN TỪNG DÒNG MÁY
         // ==========================================
-        function calculateSettings() {
-            // Lấy giá trị từ người dùng nhập
-            let screenSize = parseFloat(document.getElementById('screenSize').value);
-            let refreshRate = parseInt(document.getElementById('refreshRate').value);
-            let touchSampling = parseInt(document.getElementById('touchSampling').value);
-            let dpiInput = parseInt(document.getElementById('dpiInput').value);
+        const phoneDatabase = {
+            // --- APPLE (IPHONE) ---
+            "iphone 15 pro max": { g: 100, rd: 100, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 650 },
+            "iphone 15 pro": { g: 100, rd: 98, s2: 94, s4: 88, awm: 84, fl: 98, dpi: 640 },
+            "iphone 15": { g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 600 },
+            "iphone 14 pro max": { g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 620 },
+            "iphone 14 pro": { g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 610 },
+            "iphone 14": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 580 },
+            "iphone 13 pro max": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 600 },
+            "iphone 13 pro": { g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 590 },
+            "iphone 13": { g: 95, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
+            "iphone 12 pro max": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 560 },
+            "iphone 12": { g: 92, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
+            "iphone 11 pro max": { g: 91, rd: 89, s2: 83, s4: 79, awm: 73, fl: 89, dpi: 530 },
+            "iphone 11": { g: 90, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
+            "iphone xr": { g: 88, rd: 85, s2: 80, s4: 75, awm: 70, fl: 85, dpi: 500 },
+            "iphone xs": { g: 88, rd: 86, s2: 80, s4: 76, awm: 71, fl: 86, dpi: 510 },
+            "iphone x": { g: 87, rd: 85, s2: 79, s4: 75, awm: 70, fl: 85, dpi: 500 },
+            "iphone 8": { g: 85, rd: 83, s2: 77, s4: 73, awm: 68, fl: 83, dpi: 490 },
+            "iphone 7": { g: 83, rd: 81, s2: 75, s4: 71, awm: 66, fl: 81, dpi: 480 },
+            "iphone se": { g: 85, rd: 82, s2: 78, s4: 72, awm: 68, fl: 82, dpi: 480 },
 
-            // Kiểm tra dữ liệu hợp lệ
-            if (isNaN(screenSize) || screenSize < 4 || screenSize > 8) {
-                alert("Vui lòng nhập kích thước màn hình hợp lệ (từ 4 đến 8 inch)!");
-                return;
-            }
-            if (isNaN(dpiInput) || dpiInput < 200 || dpiInput > 800) {
-                alert("Vui lòng nhập DPI hợp lệ (từ 200 đến 800)!");
-                return;
-            }
+            // --- SAMSUNG ---
+            "samsung s24 ultra": { g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 580 },
+            "samsung s23 ultra": { g: 96, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
+            "samsung s23": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 550 },
+            "samsung s22 ultra": { g: 95, rd: 92, s2: 87, s4: 82, awm: 77, fl: 92, dpi: 560 },
+            "samsung s22": { g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 550 },
+            "samsung s21 ultra": { g: 93, rd: 89, s2: 84, s4: 79, awm: 74, fl: 89, dpi: 540 },
+            "samsung s21": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
+            "samsung s20 ultra": { g: 91, rd: 87, s2: 81, s4: 77, awm: 71, fl: 87, dpi: 520 },
+            "samsung s20": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "samsung s10e": { g: 85, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 460 },
+            "samsung s10": { g: 88, rd: 85, s2: 79, s4: 75, awm: 70, fl: 85, dpi: 500 },
+            "samsung s9": { g: 86, rd: 83, s2: 77, s4: 73, awm: 68, fl: 83, dpi: 490 },
+            "samsung s8": { g: 84, rd: 81, s2: 75, s4: 71, awm: 66, fl: 81, dpi: 480 },
+            "samsung note 20 ultra": { g: 93, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
+            "samsung note 10": { g: 89, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "samsung a54": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 480 },
+            "samsung a53": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 470 },
+            "samsung a52": { g: 85, rd: 80, s2: 75, s4: 70, awm: 65, fl: 80, dpi: 460 },
+            "samsung a51": { g: 84, rd: 79, s2: 74, s4: 69, awm: 64, fl: 79, dpi: 450 },
+            "samsung a12": { g: 80, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 430 },
+            "samsung a10": { g: 78, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 420 },
 
-            // ==========================================
-            // THUẬT TOÁN TÍNH TOÁN (Dựa trên tiêu chuẩn của game thủ FF)
-            // ==========================================
+            // --- XIAOMI / REDMI / POCO ---
+            "redmi note 13 pro": { g: 93, rd: 90, s2: 84, s4: 79, awm: 74, fl: 90, dpi: 530 },
+            "redmi note 13": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
+            "redmi note 12": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "redmi note 11": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
+            "redmi note 10": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 490 },
+            "redmi note 9": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 480 },
+            "redmi note 8": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 470 },
+            "poco x5 pro": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 540 },
+            "poco x5": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 530 },
+            "poco x3 pro": { g: 90, rd: 87, s2: 81, s4: 77, awm: 71, fl: 87, dpi: 520 },
+            "poco x3": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
+            "poco f5": { g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 550 },
+            "poco f4": { g: 92, rd: 88, s2: 83, s4: 78, awm: 73, fl: 88, dpi: 530 },
+            "poco f3": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 520 },
+            "xiaomi 13": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 570 },
+            "xiaomi 12": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 550 },
+            "xiaomi 11": { g: 92, rd: 88, s2: 83, s4: 78, awm: 73, fl: 88, dpi: 530 },
+            "xiaomi mi 10": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 520 },
+            "xiaomi mi 9": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
+
+            // --- OPPO / VIVO / REALME ---
+            "oppo reno 8": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "oppo reno 7": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
+            "oppo reno 6": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 490 },
+            "oppo a57": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
+            "oppo a58": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 460 },
+            "oppo a54": { g: 80, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 430 },
+            "realme c55": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 450 },
+            "realme 9 pro": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
+            "realme 8": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
+            "vivo y21": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
+            "vivo y35": { g: 85, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 460 },
+            "vivo y15": { g: 80, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 430 },
+
+            // --- NOKIA / ASUS / KHÁC ---
+            "nokia g50": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
+            "nokia x20": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 450 },
+            "nokia 8": { g: 80, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 430 },
+            "rog phone 6": { g: 100, rd: 98, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 600 },
+            "rog phone 5": { g: 98, rd: 95, s2: 92, s4: 88, awm: 82, fl: 98, dpi: 580 },
+            "rog phone 3": { g: 96, rd: 92, s2: 88, s4: 84, awm: 78, fl: 96, dpi: 560 }
+        };
+
+        function getSettings() {
+            const inputField = document.getElementById('deviceInput');
+            let input = inputField.value.toLowerCase().trim();
+            const resultBox = document.getElementById('result');
+            const errorBox = document.getElementById('errorBox');
             
-            // 1. Điểm cơ bản (Base Score) cho một chiếc máy tầm trung 6.5 inch, 120Hz, 240Hz touch, 450 DPI
-            let baseGeneral = 80;
-            let baseRedDot = 75;
-            let baseScope2x = 70;
-            let baseScope4x = 65;
-            let baseAWM = 60;
-            let baseFreeLook = 75;
-            let baseDPI = 450;
+            // Ẩn kết quả cũ
+            resultBox.style.display = 'none';
+            errorBox.style.display = 'none';
 
-            // 2. Hệ số điều chỉnh theo Kích thước màn hình (Màn càng nhỏ -> cần nhạy cao hơn)
-            // Công thức: 6.5 inch là chuẩn (hệ số 1.0). Màn nhỏ hơn thì tăng, màn to hơn thì giảm.
-            let sizeFactor = 1.0 + ((6.5 - screenSize) * 0.15); 
-            // Ví dụ: 6.1 inch -> 1.0 + (0.4 * 0.15) = 1.06 (tăng 6%)
-            // Ví dụ: 6.8 inch -> 1.0 + (-0.3 * 0.15) = 0.955 (giảm 4.5%)
+            if (input === "") {
+                errorBox.innerText = "Vui lòng nhập tên dòng máy của bạn!";
+                errorBox.style.display = 'block';
+                return;
+            }
 
-            // 3. Hệ số điều chỉnh theo Tần số quét (Hz càng cao -> càng mượt -> cần nhạy cao hơn)
-            let refreshFactor = 1.0;
-            if (refreshRate == 60) refreshFactor = 0.85;
-            if (refreshRate == 90) refreshFactor = 0.95;
-            if (refreshRate == 120) refreshFactor = 1.0;
-            if (refreshRate == 144) refreshFactor = 1.08;
-            if (refreshRate == 165) refreshFactor = 1.12;
+            // Chuẩn hóa chuỗi (Xóa khoảng trắng thừa, viết thường)
+            let searchKey = input.replace(/\s+/g, ' '); 
+            let settings = null;
+            let matchedName = "";
 
-            // 4. Hệ số điều chỉnh theo Touch Sampling (Cảm ứng càng nhạy -> cần nhạy cao hơn)
-            let touchFactor = 1.0;
-            if (touchSampling == 120) touchFactor = 0.85;
-            if (touchSampling == 180) touchFactor = 0.95;
-            if (touchSampling == 240) touchFactor = 1.0;
-            if (touchSampling == 360) touchFactor = 1.08;
-            if (touchSampling == 480) touchFactor = 1.15;
-            if (touchSampling == 720) touchFactor = 1.22;
+            // Tìm kiếm chính xác trong Database
+            for (let key in phoneDatabase) {
+                if (searchKey.includes(key)) {
+                    settings = phoneDatabase[key];
+                    matchedName = inputField.value.toUpperCase();
+                    break;
+                }
+            }
 
-            // 5. Hệ số điều chỉnh theo DPI (DPI cao -> cần nhạy cao hơn)
-            let dpiFactor = dpiInput / 450;
+            // Nếu không tìm thấy máy cụ thể trong Database
+            if (!settings) {
+                errorBox.innerHTML = `❌ Không tìm thấy cấu hình cho máy "<b>${inputField.value}</b>".<br>Vui lòng kiểm tra lại tên máy hoặc thử tên viết tắt (VD: ip 13, sam s10e...).`;
+                errorBox.style.display = 'block';
+                return;
+            }
 
-            // 6. Tổng hợp hệ số
-            let totalFactor = sizeFactor * refreshFactor * touchFactor * dpiFactor;
+            // Hiển thị kết quả
+            document.getElementById('deviceName').innerText = `✅ CHUẨN: ${matchedName}`;
+            document.getElementById('general').innerText = settings.g;
+            document.getElementById('redDot').innerText = settings.rd;
+            document.getElementById('scope2x').innerText = settings.s2;
+            document.getElementById('scope4x').innerText = settings.s4;
+            document.getElementById('awm').innerText = settings.awm;
+            document.getElementById('freeLook').innerText = settings.fl;
+            document.getElementById('dpi').innerText = settings.dpi;
 
-            // 7. Tính toán độ nhạy cuối cùng (Giới hạn tối đa là 100)
-            let finalGeneral = Math.min(100, Math.round(baseGeneral * totalFactor));
-            let finalRedDot = Math.min(100, Math.round(baseRedDot * totalFactor));
-            let finalScope2x = Math.min(100, Math.round(baseScope2x * totalFactor));
-            let finalScope4x = Math.min(100, Math.round(baseScope4x * totalFactor));
-            let finalAWM = Math.min(100, Math.round(baseAWM * totalFactor));
-            let finalFreeLook = Math.min(100, Math.round(baseFreeLook * totalFactor));
-
-            // 8. Tính DPI đề xuất (Dựa trên DPI gốc và hệ số)
-            let finalDPI = Math.round(baseDPI * totalFactor);
-            // Làm tròn DPI thành các mốc đẹp (chia hết cho 10)
-            finalDPI = Math.round(finalDPI / 10) * 10;
-
-            // ==========================================
-            // HIỂN THỊ KẾT QUẢ
-            // ==========================================
-            document.getElementById('deviceName').innerText = `📱 Màn ${screenSize}" | ${refreshRate}Hz | ${touchSampling}Hz Touch`;
-            document.getElementById('general').innerText = finalGeneral;
-            document.getElementById('redDot').innerText = finalRedDot;
-            document.getElementById('scope2x').innerText = finalScope2x;
-            document.getElementById('scope4x').innerText = finalScope4x;
-            document.getElementById('awm').innerText = finalAWM;
-            document.getElementById('freeLook').innerText = finalFreeLook;
-            document.getElementById('dpi').innerText = finalDPI;
-
-            // Hiện hộp kết quả
-            document.getElementById('result').style.display = 'block';
+            resultBox.style.display = 'block';
         }
     </script>
 
