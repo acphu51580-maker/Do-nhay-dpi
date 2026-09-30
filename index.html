@@ -1,7 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cài Độ Nhạy FF & DPI</title>
+    <style>
+        /* Cài đặt màu sắc và hiệu ứng */
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #1a0000, #330000);
+            border: 2px solid #ff0000;
+            border-radius: 15px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), inset 0 0 15px rgba(255, 0, 0, 0.3);
+            text-align: center;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+            to { box-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
+        }
+
+        h1 {
+            color: #ff3333;
+            text-transform: uppercase;
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff0000;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ff4d4d;
+            background-color: #260000;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #cc0000, #ff1a1a);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .result-box {
+            display: none;
+            background-color: #1a0000;
+            border: 1px solid #ff3333;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-box h2 {
+            color: #ff4d4d;
+            font-size: 18px;
+            margin-top: 0;
+            border-bottom: 1px solid #ff3333;
+            padding-bottom: 10px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 15px;
+            border-bottom: 1px dashed #330000;
+            padding-bottom: 5px;
+        }
+
+        .stat-row span:last-child {
+            color: #ff9999;
+            font-weight: bold;
+        }
+        
+        .dpi-box {
+            background-color: #ff0000;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 15px;
+            box-shadow: 0 0 10px #ff0000;
+        }
+    </style>
+</head>
 <body>
-  <h1>Chao mung den voi web cua toi!</h1>
-  <p>Web da chay thanh cong.</p>
+
+    <div class="container">
+        <h1>⚙️ Tool Độ Nhạy FF ⚙️</h1>
+        
+        <div class="input-group">
+            <input type="text" id="deviceInput" placeholder="Nhập tên máy (VD: iPhone 13, Xiaomi...)">
+            <button onclick="getSettings()">TÌM CÀI ĐẶT</button>
+        </div>
+
+        <div id="result" class="result-box">
+            <h2 id="deviceName">Tên máy</h2>
+            <div class="stat-row"><span>General:</span> <span id="general">0</span></div>
+            <div class="stat-row"><span>Red Dot:</span> <span id="redDot">0</span></div>
+            <div class="stat-row"><span>2x Scope:</span> <span id="scope2x">0</span></div>
+            <div class="stat-row"><span>4x Scope:</span> <span id="scope4x">0</span></div>
+            <div class="stat-row"><span>AWM Scope:</span> <span id="awm">0</span></div>
+            <div class="stat-row"><span>Free Look:</span> <span id="freeLook">0</span></div>
+            <div class="dpi-box">DPI ĐỀ XUẤT: <span id="dpi">0</span></div>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu độ nhạy cho một số dòng máy phổ biến
+        const data = {
+            "iphone": { general: 100, redDot: 100, scope2x: 95, scope4x: 90, awm: 85, freeLook: 100, dpi: 600 },
+            "samsung": { general: 95, redDot: 90, scope2x: 85, scope4x: 80, awm: 75, freeLook: 95, dpi: 500 },
+            "xiaomi": { general: 98, redDot: 92, scope2x: 88, scope4x: 82, awm: 78, freeLook: 98, dpi: 520 },
+            "oppo": { general: 90, redDot: 88, scope2x: 82, scope4x: 78, awm: 72, freeLook: 90, dpi: 480 },
+            "vivo": { general: 92, redDot: 89, scope2x: 84, scope4x: 80, awm: 74, freeLook: 92, dpi: 490 },
+            "realme": { general: 94, redDot: 90, scope2x: 86, scope4x: 81, awm: 76, freeLook: 94, dpi: 510 }
+        };
+
+        function getSettings() {
+            const input = document.getElementById('deviceInput').value.toLowerCase().trim();
+            const resultBox = document.getElementById('result');
+            
+            if (input === "") {
+                alert("Vui lòng nhập tên dòng máy của bạn!");
+                return;
+            }
+
+            let found = false;
+            let settings = { general: 90, redDot: 88, scope2x: 82, scope4x: 78, awm: 72, freeLook: 90, dpi: 450 }; // Mặc định (Cân bằng)
+
+            // Tìm kiếm dòng máy trong dữ liệu
+            for (let key in data) {
+                if (input.includes(key)) {
+                    settings = data[key];
+                    found = true;
+                    break;
+                }
+            }
+
+            // Hiển thị kết quả
+            document.getElementById('deviceName').innerText = "📱 Máy: " + document.getElementById('deviceInput').value.toUpperCase();
+            document.getElementById('general').innerText = settings.general;
+            document.getElementById('redDot').innerText = settings.redDot;
+            document.getElementById('scope2x').innerText = settings.scope2x;
+            document.getElementById('scope4x').innerText = settings.scope4x;
+            document.getElementById('awm').innerText = settings.awm;
+            document.getElementById('freeLook').innerText = settings.freeLook;
+            document.getElementById('dpi').innerText = settings.dpi;
+
+            // Hiện hộp kết quả với hiệu ứng
+            resultBox.style.display = 'block';
+            
+            // Nếu máy lạ, thêm ghi chú
+            if (!found) {
+                document.getElementById('deviceName').innerText += " (Máy lạ - Dùng tạm thông số chuẩn)";
+            }
+        }
+    </script>
+
 </body>
 </html>
