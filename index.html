@@ -144,6 +144,7 @@
             font-size: 14px;
             margin-top: 10px;
             font-style: italic;
+            text-align: center;
         }
     </style>
 </head>
@@ -153,7 +154,7 @@
         <h1>🔥 Tool Độ Nhạy FF & DPI 🔥</h1>
         
         <div class="input-group">
-            <input type="text" id="deviceInput" placeholder="Nhập tên máy (VD: iPhone 13, Samsung S10e...)">
+            <input type="text" id="deviceInput" placeholder="Nhập tên máy (VD: Note 12, iPhone 13...)">
             <button onclick="getSettings()">TÌM CÀI ĐẶT CHUẨN</button>
         </div>
 
@@ -180,87 +181,52 @@
             "iphone 15 pro": { g: 100, rd: 98, s2: 94, s4: 88, awm: 84, fl: 98, dpi: 640 },
             "iphone 15": { g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 600 },
             "iphone 14 pro max": { g: 98, rd: 96, s2: 92, s4: 86, awm: 82, fl: 96, dpi: 620 },
-            "iphone 14 pro": { g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 610 },
             "iphone 14": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 580 },
             "iphone 13 pro max": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 600 },
-            "iphone 13 pro": { g: 96, rd: 93, s2: 88, s4: 83, awm: 78, fl: 93, dpi: 590 },
             "iphone 13": { g: 95, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
-            "iphone 12 pro max": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 560 },
             "iphone 12": { g: 92, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
-            "iphone 11 pro max": { g: 91, rd: 89, s2: 83, s4: 79, awm: 73, fl: 89, dpi: 530 },
             "iphone 11": { g: 90, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
             "iphone xr": { g: 88, rd: 85, s2: 80, s4: 75, awm: 70, fl: 85, dpi: 500 },
-            "iphone xs": { g: 88, rd: 86, s2: 80, s4: 76, awm: 71, fl: 86, dpi: 510 },
-            "iphone x": { g: 87, rd: 85, s2: 79, s4: 75, awm: 70, fl: 85, dpi: 500 },
-            "iphone 8": { g: 85, rd: 83, s2: 77, s4: 73, awm: 68, fl: 83, dpi: 490 },
-            "iphone 7": { g: 83, rd: 81, s2: 75, s4: 71, awm: 66, fl: 81, dpi: 480 },
             "iphone se": { g: 85, rd: 82, s2: 78, s4: 72, awm: 68, fl: 82, dpi: 480 },
 
             // --- SAMSUNG ---
             "samsung s24 ultra": { g: 98, rd: 95, s2: 90, s4: 85, awm: 80, fl: 95, dpi: 580 },
             "samsung s23 ultra": { g: 96, rd: 92, s2: 88, s4: 82, awm: 78, fl: 92, dpi: 560 },
-            "samsung s23": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 550 },
-            "samsung s22 ultra": { g: 95, rd: 92, s2: 87, s4: 82, awm: 77, fl: 92, dpi: 560 },
             "samsung s22": { g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 550 },
-            "samsung s21 ultra": { g: 93, rd: 89, s2: 84, s4: 79, awm: 74, fl: 89, dpi: 540 },
             "samsung s21": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
-            "samsung s20 ultra": { g: 91, rd: 87, s2: 81, s4: 77, awm: 71, fl: 87, dpi: 520 },
             "samsung s20": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
             "samsung s10e": { g: 85, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 460 },
-            "samsung s10": { g: 88, rd: 85, s2: 79, s4: 75, awm: 70, fl: 85, dpi: 500 },
-            "samsung s9": { g: 86, rd: 83, s2: 77, s4: 73, awm: 68, fl: 83, dpi: 490 },
-            "samsung s8": { g: 84, rd: 81, s2: 75, s4: 71, awm: 66, fl: 81, dpi: 480 },
-            "samsung note 20 ultra": { g: 93, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 540 },
+            "samsung note 20": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
             "samsung note 10": { g: 89, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
             "samsung a54": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 480 },
             "samsung a53": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 470 },
             "samsung a52": { g: 85, rd: 80, s2: 75, s4: 70, awm: 65, fl: 80, dpi: 460 },
-            "samsung a51": { g: 84, rd: 79, s2: 74, s4: 69, awm: 64, fl: 79, dpi: 450 },
             "samsung a12": { g: 80, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 430 },
-            "samsung a10": { g: 78, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 420 },
 
             // --- XIAOMI / REDMI / POCO ---
-            "redmi note 13 pro": { g: 93, rd: 90, s2: 84, s4: 79, awm: 74, fl: 90, dpi: 530 },
             "redmi note 13": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 520 },
             "redmi note 12": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
             "redmi note 11": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
             "redmi note 10": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 490 },
-            "redmi note 9": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 480 },
-            "redmi note 8": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 470 },
-            "poco x5 pro": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 540 },
             "poco x5": { g: 92, rd: 88, s2: 82, s4: 78, awm: 72, fl: 88, dpi: 530 },
-            "poco x3 pro": { g: 90, rd: 87, s2: 81, s4: 77, awm: 71, fl: 87, dpi: 520 },
             "poco x3": { g: 88, rd: 85, s2: 78, s4: 74, awm: 68, fl: 85, dpi: 500 },
             "poco f5": { g: 94, rd: 90, s2: 85, s4: 80, awm: 75, fl: 90, dpi: 550 },
-            "poco f4": { g: 92, rd: 88, s2: 83, s4: 78, awm: 73, fl: 88, dpi: 530 },
-            "poco f3": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 520 },
             "xiaomi 13": { g: 96, rd: 94, s2: 90, s4: 84, awm: 80, fl: 94, dpi: 570 },
             "xiaomi 12": { g: 94, rd: 91, s2: 86, s4: 81, awm: 76, fl: 91, dpi: 550 },
-            "xiaomi 11": { g: 92, rd: 88, s2: 83, s4: 78, awm: 73, fl: 88, dpi: 530 },
-            "xiaomi mi 10": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 520 },
-            "xiaomi mi 9": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
 
             // --- OPPO / VIVO / REALME ---
             "oppo reno 8": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
-            "oppo reno 7": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
-            "oppo reno 6": { g: 86, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 490 },
             "oppo a57": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
             "oppo a58": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 460 },
-            "oppo a54": { g: 80, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 430 },
             "realme c55": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 450 },
-            "realme 9 pro": { g: 90, rd: 86, s2: 80, s4: 76, awm: 70, fl: 86, dpi: 510 },
-            "realme 8": { g: 88, rd: 84, s2: 78, s4: 74, awm: 68, fl: 84, dpi: 500 },
             "vivo y21": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
             "vivo y35": { g: 85, rd: 82, s2: 76, s4: 72, awm: 66, fl: 82, dpi: 460 },
-            "vivo y15": { g: 80, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 430 },
 
-            // --- NOKIA / ASUS / KHÁC ---
+            // --- NOKIA / ASUS ---
             "nokia g50": { g: 82, rd: 78, s2: 72, s4: 68, awm: 62, fl: 78, dpi: 440 },
             "nokia x20": { g: 84, rd: 80, s2: 74, s4: 70, awm: 64, fl: 80, dpi: 450 },
-            "nokia 8": { g: 80, rd: 76, s2: 70, s4: 66, awm: 60, fl: 76, dpi: 430 },
             "rog phone 6": { g: 100, rd: 98, s2: 95, s4: 90, awm: 85, fl: 100, dpi: 600 },
-            "rog phone 5": { g: 98, rd: 95, s2: 92, s4: 88, awm: 82, fl: 98, dpi: 580 },
-            "rog phone 3": { g: 96, rd: 92, s2: 88, s4: 84, awm: 78, fl: 96, dpi: 560 }
+            "rog phone 5": { g: 98, rd: 95, s2: 92, s4: 88, awm: 82, fl: 98, dpi: 580 }
         };
 
         function getSettings() {
@@ -269,7 +235,6 @@
             const resultBox = document.getElementById('result');
             const errorBox = document.getElementById('errorBox');
             
-            // Ẩn kết quả cũ
             resultBox.style.display = 'none';
             errorBox.style.display = 'none';
 
@@ -279,23 +244,37 @@
                 return;
             }
 
-            // Chuẩn hóa chuỗi (Xóa khoảng trắng thừa, viết thường)
-            let searchKey = input.replace(/\s+/g, ' '); 
+            // Xóa toàn bộ khoảng trắng để tìm kiếm thông minh hơn (VD: "note 12" -> "note12")
+            let searchKey = input.replace(/\s+/g, ''); 
             let settings = null;
             let matchedName = "";
 
-            // Tìm kiếm chính xác trong Database
+            // 1. Tìm kiếm chính xác tuyệt đối trước
             for (let key in phoneDatabase) {
-                if (searchKey.includes(key)) {
+                let cleanKey = key.replace(/\s+/g, ''); // "redminote12"
+                if (cleanKey === searchKey) {
                     settings = phoneDatabase[key];
                     matchedName = inputField.value.toUpperCase();
                     break;
                 }
             }
 
-            // Nếu không tìm thấy máy cụ thể trong Database
+            // 2. Nếu không có chính xác, tìm kiếm gần đúng (Bao gồm từ khóa)
             if (!settings) {
-                errorBox.innerHTML = `❌ Không tìm thấy cấu hình cho máy "<b>${inputField.value}</b>".<br>Vui lòng kiểm tra lại tên máy hoặc thử tên viết tắt (VD: ip 13, sam s10e...).`;
+                for (let key in phoneDatabase) {
+                    let cleanKey = key.replace(/\s+/g, ''); 
+                    // Ví dụ: searchKey="note12", cleanKey="redminote12" -> Thỏa mãn
+                    if (cleanKey.includes(searchKey)) {
+                        settings = phoneDatabase[key];
+                        matchedName = inputField.value.toUpperCase();
+                        break;
+                    }
+                }
+            }
+
+            // Nếu vẫn không tìm thấy
+            if (!settings) {
+                errorBox.innerHTML = `❌ Không tìm thấy cấu hình cho máy "<b>${inputField.value}</b>".<br>Vui lòng kiểm tra lại tên máy (VD: Note 12, S10e, iPhone 13...).`;
                 errorBox.style.display = 'block';
                 return;
             }
