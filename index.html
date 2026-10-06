@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tool Độ Nhạy Free Fire</title>
+    <title>Tool Độ Nhạy Free Fire - Random</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
@@ -58,23 +58,24 @@
             text-align: center;
             margin-bottom: 10px;
             display: none;
-            font-weight: bold;
+            fontDev-weight: bold;
         }
 
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 12pxices;
             border: none;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 16px();
             cursor: pointer;
             margin-bottom: 10px;
-            text-transform: uppercase;
+            text {
+-transform: uppercase;
             transition: 0.3s;
         }
-        .btn-free { background: #FF00FF; color: white; box-shadow: 0 0 10px #FF00FF; }
-        .btn-free:hover { background: #d400d4; }
+        .btn-free {        background: #FF00FF; color: white; box-shadow: 0 0 10px #FF00FF; }
+        . letbtn-free:hover { background: #d400d4; }
         .btn-reset { background: #1E3A8A; color: white; border: 1px solid #00FFFF; }
 
         .slider-group { margin-bottom: 15px; }
@@ -126,8 +127,8 @@
         <datalist id="deviceList"></datalist>
     </div>
     
-    <div id="errorMsg">❌ Dòng máy này chưa có dữ liệu độ nhạy!</div>
-    <div id="successMsg">✅ Đã tìm thấy độ nhạy chuẩn!</div>
+    <div id="errorMsg">❌ Dòng máy này chưa có trong danh sách!</div>
+    <div id="successMsg">🎲 Đang random độ nhạy...</div>
 
     <button class="btn btn-free" onclick="applySensitivity()">⚡ LẤY ĐỘ NHẠY FREE</button>
     <button class="btn btn-reset" onclick="resetSliders()">🔄 ĐẶT LẠI</button>
@@ -171,16 +172,15 @@
     
     const devices = [
         "iOS 16", "iOS 15", "iOS 14", "iOS 13", "iPhone 15 Pro Max", "iPhone 14", "iPhone 13", "iPhone 12", "iPhone 11", "iPhone X",
-        "Samsung Galaxy S 24 Ultra", "Samsung Galaxy S23", "Samsung Galaxy A54", "Samsung Galaxy A34", "Samsung Galaxy M14", "Samsung Galaxy Note 20",
-        "Xiaomi13 14 Pro", "Xiaomi Redmi Note 13", "Xiaomi Redmi Note 12", "Xiaomi Redmi 10", "Xiaomi": Poco X6", "Xiaomi Poco M5",
-        "Oppo Reno 11", "Oppo Reno 8", "Oppo A98", " {Oppo A58", "Oppo Find N3",
-        "Realme Note 50", "Realme 11 Pro", "Realme C55", "Realme C53", " lookRealme GT Neo 5",
+        "Samsung Galaxy S24 Ultra", "Samsung Galaxy S23", "Samsung Galaxy A54", "Samsung Galaxy A34", "Samsung Galaxy M14", "Samsung Galaxy Note 20",
+        "Xiaomi 14 Pro", "Xiaomi Redmi Note 13", "Xiaomi Redmi Note 12", "Xiaomi Redmi 10", "Xiaomi Poco X6", "Xiaomi Poco M5",
+        "Oppo Reno 11", "Oppo Reno 8", "Oppo A98", "Oppo A58", "Oppo Find N3",
+        "Realme Note 50", "Realme 11 Pro", "Realme C55", "Realme C53", "Realme GT Neo 5",
         "Vivo V29", "Vivo Y36", "Vivo Y27", "Vivo T2", "Vivo X100",
-        "Asus ROG Phone: 7", "Nubia Red Magic 8", "OnePlus 11", "Huawei P60", "Nokia G42"
+        "Asus ROG Phone 7", "Nubia Red Magic 8", "OnePlus 11", "Huawei P60", "Nokia G42"
     ];
 
-    function generate100Devices() {
-        let fullList = [];
+    function generate100 fullList = [];
         for (let i = 0; i < devices.length; i++) fullList.push(devices[i]);
         let suffix = 1;
         while (fullList.length < 100) {
@@ -198,91 +198,22 @@
     });
 
     // ==========================================
-    // 2. DATABASE ĐỘ NHẠY CHO 100 DÒNG MÁY
+    // 2. HÀM RANDOM ĐỘ NHẠY
     // ==========================================
-    // Mỗi máy có thông số: look (nhìn), reddot (hồng tâm), x2, x4, sniper (súng ngắm), cam, btn (nút bấm), dpi
-    // Bạn có thể sửa số tùy ý, miễn giữ đúng cú pháp.
-    
-    const sensitivityDatabase = {
-        "ios 16": { look: 178, reddot: 152, x2: 179, x4: 186, sniper: 177, cam: 135, btn: 40, dpi: 400 },
-        "ios 15": { look: 176, reddot: 150, x2: 177, x4: 184, sniper: 175, cam: 133, btn: 40, dpi: 400 },
-        "ios 14": { look: 174, reddot: 148, x2: 175, x4: 182, sniper: 173, cam: 131, btn: 38, dpi: 390 },
-        "ios 172, reddot: 146, x2: 173, x4: 180, sniper: 171, cam: 129, btn: 38, dpi: 380 },
-        "iphone 15 pro max": { look: 180, reddot: 155, x2: 181, x4: 188, sniper: 179, cam: 138, btn: 42, dpi: 410 },
-        "iphone 14": { look: 178, reddot: 152, x2: 179, x4: 186, sniper: 177, cam: 135, btn: 40, dpi: 400 },
-        "iphone 13": { look: 176, reddot: 150, x2: 177, x4: 184, sniper: 175, cam: 133, btn: 40, dpi: 400 },
-        "iphone 12": { look: 174, reddot: 148, x2: 175, x4: 182, sniper: 173, cam: 131, btn: 38, dpi: 390 },
-        "iphone 11": { look: 172, reddot: 146, x2: 173, x4: 180, sniper: 171, cam: 129, btn: 38, dpi: 380 },
-        "iphone x": { look: 170, reddot: 144, x2: 171, x4: 178, sniper: 169, cam: 127, btn: 36, dpi: 370 },
-        
-        "samsung galaxy s24 ultra": { look: 185, reddot: 155, x2: 182, x4: 195, sniper: 185, cam: 150, btn: 50, dpi: 450 },
-        "samsung galaxy s23": { look: 183, reddot: 153, x2: 180, x4: 193, sniper: 183, cam: 148, btn: 48, dpi: 440 },
-        "samsung galaxy a54": { look: 175, reddot: 145, x2: 172, x4: 185, sniper: 175, cam: 140, btn: 45, dpi: 420 },
-        "samsung galaxy a34": { look: 173, reddot: 143, x2: 170, x4: 183, sniper: 173, cam: 138, btn: 43, dpi: 410 },
-        "samsung galaxy m14": { look: 170, reddot: 140, x2: 168, x4: 180, sniper: 170, cam: 135, btn: 40, dpi: 400 },
-        "samsung galaxy note 20": { look: 180, reddot: 150, x2: 178, x4: 190, sniper: 180, cam: 145, btn: 48, dpi: 430 },
-        
-        "xiaomi 14 pro": { look: 182, reddot: 152, x2: 180, x4: 192, sniper: 182, cam: 148, btn: 48, dpi: 440 },
-        "xiaomi redmi note 13": { look: 175, reddot: 145, x2: 170, x4: 180, sniper: 170, cam: 130, btn: 35, dpi: 380 },
-        "xiaomi redmi note 12": { look: 173, reddot: 143, x2: 168, x4: 178, sniper: 168, cam: 128, btn: 35, dpi: 375 },
-        "xiaomi redmi 10": { look: 168, reddot: 138, x2: 165, x4: 175, sniper: 165, cam: 125, btn: 32, dpi: 360 },
-        "xiaomi poco x6": { look: 178, reddot: 148, x2: 175, x4: 185, sniper: 175, cam: 135, btn: 40, dpi: 400 },
-        "xiaomi poco m5": { look: 170, reddot: 140, x2: 168, x4: 178, sniper: 168, cam: 128, btn: 35, dpi: 370 },
-        
-        "oppo reno 11": { look: 175, reddot: 145, x2: 172, x4: 183, sniper: 175, cam: 135, btn: 42, dpi: 400 },
-        "oppo reno 8": { look: 173, reddot: 143, x2: 170, x4: 181, sniper: 173, cam: 133, btn: 40, dpi: 390 },
-        "oppo a98": { look: 170, reddot: 140, x2: 168, x4: 178, sniper: 170, cam: 130, btn: 38, dpi: 380 },
-        "oppo a58": { look: 168, reddot: 138, x2: 165, x4: 175, sniper: 168, cam: 128, btn: 35, dpi: 370 },
-        "oppo find n3": { look: 180, reddot: 150, x2: 178, x4: 190, sniper: 180, cam: 145, btn: 45, dpi: 430 },
-        
-        "realme note 50": { look: 180, reddot: 160, x2: 175, x4: 190, sniper: 180, cam: 140, btn: 45, dpi: 420 },
-        "realme 11 pro": { look: 178, reddot: 155, x2: 175, x4: 188, sniper: 178, cam: 140, btn: 44, dpi: 415 },
-        "realme c55": { look: 172, reddot: 145, x2: 170, x4: 180, sniper: 172, cam: 135, btn: 40, dpi: 390 },
-        "realme c53": { look: 170, reddot: 143, x2: 168, x4: 178, sniper: 170, cam: 133, btn: 38, dpi: 380 },
-        "realme gt neo 5": { look: 182, reddot: 155, x2: 180, x4: 192, sniper: 182, cam: 148, btn: 48, dpi: 440 },
-        
-        "vivo v29": { look: 176, reddot: 146, x2: 173, x4: 185, sniper: 176, cam: 138, btn: 42, dpi: 405 },
-        "vivo y36": { look: 170, reddot: 140, x2: 168, x4: 178, sniper: 170, cam: 130, btn: 38, dpi: 380 },
-        "vivo y27": { look: 168, reddot: 138, x2: 166, x4: 176, sniper: 168, cam: 128, btn: 36, dpi: 375 },
-        "vivo t2": { look: 175, reddot: 145, x2: 172, x4: 183, sniper: 175, cam: 136, btn: 40, dpi: 395 },
-        "vivo x100": { look: 184, reddot: 154, x2: 181, x4: 194, sniper: 184, cam: 150, btn: 50, dpi: 450 },
-        
-        "asus rog phone 7": { look: 185, reddot: 158, x2: 183, x4: 196, sniper: 186, cam: 152, btn: 52, dpi: 460 },
-        "nubia red magic 8": { look: 184, reddot: 157, x2: 182, x4: 195, sniper: 185, cam: 150, btn: 50, dpi: 455 },
-        "oneplus 11": { look: 182, reddot: 154, x2: 180, x4: 193, sniper: 183, cam: 148, btn: 48, dpi: 445 },
-        "huawei p60": { look: 178, reddot: 148, x2: 175, x4: 186, sniper: 178, cam: 140, btn: 44, dpi: 415 },
-        "nokia g42": { look: 165, reddot: 135, x2: 162, x4: 172, sniper: 165, cam: 125, btn: 35, dpi: 360 }
-    };
+    // Random trong khoảng min - max (mặc định 100 - 200)
+    function randomSensitivity(min = 100, max = 200) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
-    // Tự động điền độ nhạy cho các máy có hậu tố (1), (2)... trong danh sách 100 máy
-    // Bằng cách lấy độ nhạy của máy gốc + giảm nhẹ để tạo sự khác biệt
-    finalDeviceList.forEach(deviceName => {
-        const key = deviceName.toLowerCase();
-        if (!sensitivityDatabase[key]) {
-            // Tìm máy gốc (bỏ hậu tố " (1)", " (2)"...)
-            const baseName = key.replace(/\s*\(\d+\)$/, '');
-            let baseData = sensitivityDatabase[baseName];
-            
-            if (baseData) {
-                // Tạo bản sao với thông số giảm nhẹ dựa trên số thứ tự
-                const match = key.match(/\((\d+)\)/);
-                const offset = match ? parseInt(match[1]) : 1;
-                sensitivityDatabase[key] = {
-                    look: Math.max(100, baseData.look - offset),
-                    reddot: Math.max(100, baseData.reddot - offset),
-                    x2: Math.max(100, baseData.x2 - offset),
-                    x4: Math.max(100, baseData.x4 - offset),
-                    sniper: Math.max(100, baseData.sniper - offset),
-                    cam: Math.max(100, baseData.cam - offset),
-                    btn: Math.max(20, baseData.btn - offset),
-                    dpi: Math.max(300, baseData.dpi - offset * 5)
-                };
-            } else {
-                // Nếu không tìm thấy máy gốc, dùng mặc định
-                sensitivityDatabase[key] = { look: 175, reddot: 148, x2: 172, x4: 183, sniper: 175, cam: 135, btn: 40, dpi: 400 };
-            }
-        }
-    });
+    // Random Nút Bấm (khoảng 30 - 60%)
+    function randomBtn() {
+        return Math.floor(Math.random() * (60 - 30 + 1)) + 30;
+    }
+
+    // Random DPI (khoảng 350 - 480)
+    function randomDpi() {
+        return Math.floor(Math.random() * (480 - 350 + 1)) + 350;
+    }
 
     // ==========================================
     // 3. LOGIC CHẠY HIỆU ỨNG
@@ -308,25 +239,38 @@
     }
 
     function applySensitivity() {
-        const inputVal = document.getElementById('deviceInput').value.trim().toLowerCase();
+        const inputVal = document.getElementById('deviceInput').value.trim();
         const errorMsg = document.getElementById('errorMsg');
         const successMsg = document.getElementById('successMsg');
-        let data = sensitivityDatabase[inputVal];
 
-        if (!data) {
+        // Kiểm tra ô nhập có trống không
+        if (inputVal === "") {
             errorMsg.style.display = 'block';
-            errorMsg.innerText = '❌ Dòng máy "' + inputVal + '" chưa có dữ liệu độ nhạy!';
+            errorMsg.innerText = '❌ Vui lòng nhập tên dòng máy!';
             successMsg.style.display = 'none';
             resetSliders();
             return;
         }
 
+        // Kiểm tra máy có trong danh sách không (so sánh không phân biệt hoa thường)
+        const isExist = finalDeviceList.some(d => d.toLowerCase() === inputVal.toLowerCase());
+        
+        if (!isExist) {
+            errorMsg.style.display = 'block';
+            errorMsg.innerText = '❌ Dòng máy "' + inputVal + '" không có trong danh sách!';
+            successMsg.style.display = 'none';
+            resetSliders();
+            return;
+        }
+
+        // Nếu đúng thì bắt đầu random
         errorMsg.style.display = 'none';
         successMsg.style.display = 'block';
-        successMsg.innerText = '✅ Đã tìm thấy độ nhạy chuẩn!';
+        successMsg.innerText = '🎲 Đã random độ nhạy cho: ' + inputVal;
 
         if (animationId) cancelAnimationFrame(animationId);
 
+        // Reset về 0 trước khi chạy
         const sliders = ['look', 'reddot', 'x2', 'x4', 'sniper', 'cam'];
         sliders.forEach(s => {
             document.getElementById('slider-' + s).value = 0;
@@ -335,20 +279,33 @@
         document.getElementById('val-btn').innerText = 0;
         document.getElementById('val-dpi').innerText = 0;
 
+        // Tạo bộ số random mới mỗi lần bấm
+        const randomData = {
+            look: randomSensitivity(150, 195),
+            reddot: randomSensitivity(130, 175),
+            x2: randomSensitivity(150, 195),
+            x4: randomSensitivity(160, 200),
+            sniper: randomSensitivity(150, 195),
+            cam: randomSensitivity(120, 160),
+            btn: randomBtn(),
+            dpi: randomDpi()
+        };
+
+        // Chạy hiệu ứng từ 0 lên số random
         setTimeout(() => {
             sliders.forEach(key => {
                 const targetSlider = document.getElementById('slider-' + key);
                 const targetText = document.getElementById('val-' + key);
-                animateValue(key, 0, data[key], 1500, (val) => {
+                animateValue(key, 0, randomData[key], 1500, (val) => {
                     targetSlider.value = val;
                     targetText.innerText = val;
                 });
             });
 
-            animateValue('btn', 0, data.btn, 1500, (val) => {
+            animateValue('btn', 0, randomData.btn, 1500, (val) => {
                 document.getElementById('val-btn').innerText = val;
             });
-            animateValue('dpi', 0, data.dpi, 1500, (val) => {
+            animateValue('dpi', 0, randomData.dpi, 1500, (val) => {
                 document.getElementById('val-dpi').innerText = val;
             });
         }, 100);
