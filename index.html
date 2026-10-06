@@ -1,374 +1,88 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MR.PHUC - Độ Nhạy Free Fire Chuẩn Theo Máy</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .container { width: 100%; max-width: 420px; background: rgba(15, 23, 42, 0.9); border: 2px solid #3b82f6; border-radius: 20px; padding: 20px; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); position: relative; }
-        .header-title { text-align: center; font-size: 20px; font-weight: bold; color: #60a5fa; text-transform: uppercase; text-shadow: 0 0 10px #3b82f6; margin-bottom: 20px; }
-        .name-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #ef4444, #ec4899); color: white; padding: 4px 20px; border-radius: 20px; font-weight: bold; font-size: 12px; box-shadow: 0 0 10px #ec4899; }
-        .input-group { margin-bottom: 15px; }
-        .input-group input { width: 100%; padding: 14px; background: #1e293b; border: 1px solid #475569; border-radius: 10px; color: #e2e8f0; font-size: 16px; outline: none; }
-        .input-group input:focus { border-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 10px; transition: 0.3s; }
-        .btn-primary { background: linear-gradient(90deg, #ec4899, #8b5cf6); color: white; box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
-        .btn-primary:hover { transform: scale(1.02); }
-        .btn-secondary { background: #334155; color: #94a3b8; border: 1px solid #475569; }
-        .result-panel { background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 15px; margin-top: 15px; display: none; }
-        .result-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #1e293b; padding-bottom: 10px; font-size: 13px; }
-        .slider-item { margin-bottom: 12px; }
-        .slider-info { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; color: #cbd5e1; }
-        .slider-value { color: #3b82f6; font-weight: bold; background: rgba(59, 130, 246, 0.1); padding: 2px 8px; border-radius: 5px; }
-        .slider-bar { width: 100%; height: 8px; background: #1e293b; border-radius: 4px; overflow: hidden; }
-        .slider-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); width: 0%; transition: width 1s ease-out; }
-        .footer-note { text-align: center; margin-top: 15px; font-size: 10px; color: #475569; }
-        .spec-info { font-size: 11px; color: #64748b; text-align: center; margin-bottom: 10px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="name-tag">MR.PHUC</div>
-        <div class="header-title">ĐỘ NHẠY CHUẨN THEO MÁY</div>
-        <div class="input-group">
-            <input type="text" id="deviceInput" list="deviceList" placeholder="Nhập tên máy (VD: iphone 15, oppo a57...)">
-            <datalist id="deviceList"></datalist>
-        </div>
-        <button class="btn btn-primary" onclick="getSensitivity()">🎯 TÍNH ĐỘ NHẠY CHUẨN</button>
-        <button class="btn btn-secondary" onclick="resetForm()">🔄 ĐẶT LẠI</button>
-        <div class="result-panel" id="resultPanel">
-            <div class="result-header">
-                <h3 id="deviceNameDisplay">ĐỘ NHẠY PREMIUM</h3>
-                <span id="timeStamp"></span>
-            </div>
-            <div class="spec-info" id="specInfo"></div>
-            <div id="slidersContainer"></div>
-        </div>
-        <div class="footer-note">Độ nhạy được tính từ thông số kỹ thuật thật của máy</div>
-    </div>
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A1128"
+    android:padding="16dp">
 
-    <script>
-        // ============================================================
-        // CƠ SỞ DỮ LIỆU THÔNG SỐ KỸ THUẬT THẬT CỦA MÁY
-        // ============================================================
-        // Mỗi máy có: inch (kích thước màn hình), hz (tần số quét), 
-        // touch (tốc độ lấy mẫu cảm ứng), ppi (mật độ điểm ảnh)
-        // Độ nhạy sẽ được tính từ các thông số này, KHÔNG phải số ngẫu nhiên.
-        
-        const deviceSpecs = {
-            // ===== IPHONE =====
-            "iphone 15 pro max": { inch: 6.7, hz: 120, touch: 120, ppi: 460 },
-            "iphone 15 pro": { inch: 6.1, hz: 120, touch: 120, ppi: 460 },
-            "iphone 15": { inch: 6.1, hz: 60, touch: 60, ppi: 460 },
-            "iphone 14 pro max": { inch: 6.7, hz: 120, touch: 120, ppi: 460 },
-            "iphone 14 pro": { inch: 6.1, hz: 120, touch: 120, ppi: 460 },
-            "iphone 14": { inch: 6.1, hz: 60, touch: 60, ppi: 460 },
-            "iphone 13 pro max": { inch: 6.7, hz: 120, touch: 120, ppi: 458 },
-            "iphone 13 pro": { inch: 6.1, hz: 120, touch: 120, ppi: 460 },
-            "iphone 13": { inch: 6.1, hz: 60, touch: 60, ppi: 460 },
-            "iphone 12 pro max": { inch: 6.7, hz: 60, touch: 60, ppi: 458 },
-            "iphone 12": { inch: 6.1, hz: 60, touch: 60, ppi: 460 },
-            "iphone 11 pro max": { inch: 6.5, hz: 60, touch: 60, ppi: 458 },
-            "iphone 11": { inch: 6.1, hz: 60, touch: 60, ppi: 326 },
-            "iphone xr": { inch: 6.1, hz: 60, touch: 60, ppi: 326 },
-            "iphone xs max": { inch: 6.5, hz: 60, touch: 60, ppi: 458 },
-            "iphone x": { inch: 5.8, hz: 60, touch: 60, ppi: 458 },
-            "iphone se 2022": { inch: 4.7, hz: 60, touch: 60, ppi: 326 },
-            "iphone se 2020": { inch: 4.7, hz: 60, touch: 60, ppi: 326 },
-            // ===== IPAD =====
-            "ipad pro 12.9": { inch: 12.9, hz: 120, touch: 120, ppi: 264 },
-            "ipad pro 11": { inch: 11.0, hz: 120, touch: 120, ppi: 264 },
-            "ipad air 5": { inch: 10.9, hz: 60, touch: 60, ppi: 264 },
-            "ipad air 4": { inch: 10.9, hz: 60, touch: 60, ppi: 264 },
-            "ipad gen 9": { inch: 10.2, hz: 60, touch: 60, ppi: 264 },
-            "ipad gen 10": { inch: 10.9, hz: 60, touch: 60, ppi: 264 },
-            "ipad mini 6": { inch: 8.3, hz: 60, touch: 60, ppi: 326 },
-            // ===== SAMSUNG =====
-            "samsung s23 ultra": { inch: 6.8, hz: 120, touch: 240, ppi: 500 },
-            "samsung s23": { inch: 6.1, hz: 120, touch: 240, ppi: 425 },
-            "samsung s22 ultra": { inch: 6.8, hz: 120, touch: 240, ppi: 500 },
-            "samsung s21 fe": { inch: 6.4, hz: 120, touch: 240, ppi: 411 },
-            "samsung a54": { inch: 6.4, hz: 120, touch: 240, ppi: 403 },
-            "samsung a34": { inch: 6.6, hz: 120, touch: 240, ppi: 390 },
-            "samsung a14": { inch: 6.6, hz: 90, touch: 120, ppi: 266 },
-            "samsung a12": { inch: 6.5, hz: 60, touch: 60, ppi: 270 },
-            "samsung a23": { inch: 6.6, hz: 90, touch: 120, ppi: 266 },
-            "samsung a73": { inch: 6.7, hz: 120, touch: 240, ppi: 393 },
-            "samsung m14": { inch: 6.6, hz: 90, touch: 120, ppi: 266 },
-            "samsung m33": { inch: 6.6, hz: 120, touch: 240, ppi: 390 },
-            "samsung z fold 4": { inch: 7.6, hz: 120, touch: 240, ppi: 373 },
-            "samsung z flip 4": { inch: 6.7, hz: 120, touch: 240, ppi: 425 },
-            "samsung note 20 ultra": { inch: 6.9, hz: 120, touch: 240, ppi: 496 },
-            "samsung tab s8": { inch: 11.0, hz: 120, touch: 240, ppi: 274 },
-            // ===== OPPO =====
-            "oppo find x6 pro": { inch: 6.82, hz: 120, touch: 240, ppi: 510 },
-            "oppo reno 10 pro": { inch: 6.7, hz: 120, touch: 240, ppi: 394 },
-            "oppo reno 8": { inch: 6.4, hz: 90, touch: 180, ppi: 411 },
-            "oppo reno 7": { inch: 6.4, hz: 90, touch: 180, ppi: 411 },
-            "oppo a57": { inch: 6.56, hz: 60, touch: 60, ppi: 269 },
-            "oppo a16": { inch: 6.52, hz: 60, touch: 60, ppi: 269 },
-            "oppo a17": { inch: 6.56, hz: 60, touch: 60, ppi: 269 },
-            "oppo a78": { inch: 6.43, hz: 90, touch: 180, ppi: 409 },
-            "oppo a58": { inch: 6.56, hz: 90, touch: 180, ppi: 269 },
-            "oppo a96": { inch: 6.59, hz: 90, touch: 180, ppi: 401 },
-            "oppo a95": { inch: 6.43, hz: 60, touch: 60, ppi: 409 },
-            "oppo a54": { inch: 6.51, hz: 60, touch: 60, ppi: 270 },
-            "oppo a15": { inch: 6.52, hz: 60, touch: 60, ppi: 269 },
-            "oppo a5s": { inch: 6.2, hz: 60, touch: 60, ppi: 271 },
-            "oppo f11": { inch: 6.53, hz: 60, touch: 60, ppi: 394 },
-            "oppo f9": { inch: 6.3, hz: 60, touch: 60, ppi: 409 },
-            // ===== REALME =====
-            "realme gt neo 5": { inch: 6.74, hz: 144, touch: 360, ppi: 451 },
-            "realme gt 3": { inch: 6.74, hz: 144, touch: 360, ppi: 451 },
-            "realme 11 pro": { inch: 6.7, hz: 120, touch: 240, ppi: 394 },
-            "realme 10 pro": { inch: 6.72, hz: 120, touch: 240, ppi: 392 },
-            "realme 9 pro": { inch: 6.6, hz: 120, touch: 240, ppi: 400 },
-            "realme c55": { inch: 6.72, hz: 90, touch: 180, ppi: 392 },
-            "realme c53": { inch: 6.74, hz: 90, touch: 180, ppi: 260 },
-            "realme c35": { inch: 6.6, hz: 60, touch: 60, ppi: 401 },
-            "realme c33": { inch: 6.5, hz: 60, touch: 60, ppi: 270 },
-            "realme c31": { inch: 6.5, hz: 60, touch: 60, ppi: 270 },
-            "realme c25": { inch: 6.5, hz: 60, touch: 60, ppi: 270 },
-            "realme c21": { inch: 6.5, hz: 60, touch: 60, ppi: 270 },
-            "realme c15": { inch: 6.5, hz: 60, touch: 60, ppi: 270 },
-            "realme note 50": { inch: 6.74, hz: 90, touch: 180, ppi: 260 },
-            "realme narzo 60": { inch: 6.43, hz: 90, touch: 180, ppi: 409 },
-            "realme narzo 50": { inch: 6.6, hz: 120, touch: 240, ppi: 401 },
-            // ===== XIAOMI =====
-            "xiaomi 13 pro": { inch: 6.73, hz: 120, touch: 240, ppi: 522 },
-            "xiaomi 13": { inch: 6.36, hz: 120, touch: 240, ppi: 414 },
-            "xiaomi 12 pro": { inch: 6.73, hz: 120, touch: 480, ppi: 521 },
-            "xiaomi 12": { inch: 6.28, hz: 120, touch: 480, ppi: 419 },
-            "xiaomi 11t pro": { inch: 6.67, hz: 120, touch: 480, ppi: 395 },
-            "xiaomi redmi note 12": { inch: 6.67, hz: 120, touch: 240, ppi: 395 },
-            "xiaomi redmi note 11": { inch: 6.43, hz: 90, touch: 180, ppi: 409 },
-            "xiaomi redmi note 10": { inch: 6.43, hz: 60, touch: 60, ppi: 409 },
-            "xiaomi redmi 12": { inch: 6.79, hz: 90, touch: 180, ppi: 396 },
-            "xiaomi redmi 10": { inch: 6.5, hz: 90, touch: 180, ppi: 405 },
-            "xiaomi redmi 9": { inch: 6.53, hz: 60, touch: 60, ppi: 395 },
-            "xiaomi poco x5 pro": { inch: 6.67, hz: 120, touch: 240, ppi: 395 },
-            "xiaomi poco x5": { inch: 6.67, hz: 120, touch: 240, ppi: 395 },
-            "xiaomi poco m5": { inch: 6.58, hz: 90, touch: 180, ppi: 401 },
-            "xiaomi poco f5": { inch: 6.67, hz: 120, touch: 240, ppi: 395 },
-            "xiaomi mi 11": { inch: 6.81, hz: 120, touch: 480, ppi: 515 },
-            // ===== NUBIA =====
-            "nubia red magic 8 pro": { inch: 6.8, hz: 120, touch: 960, ppi: 400 },
-            "nubia red magic 8": { inch: 6.8, hz: 120, touch: 960, ppi: 400 },
-            "nubia red magic 7 pro": { inch: 6.8, hz: 120, touch: 960, ppi: 400 },
-            "nubia red magic 7": { inch: 6.8, hz: 165, touch: 720, ppi: 387 },
-            "nubia red magic 6": { inch: 6.8, hz: 165, touch: 500, ppi: 387 },
-            "nubia red magic 5g": { inch: 6.65, hz: 144, touch: 300, ppi: 388 },
-            "nubia z50 ultra": { inch: 6.8, hz: 120, touch: 960, ppi: 400 },
-            "nubia z40 pro": { inch: 6.67, hz: 144, touch: 360, ppi: 395 },
-            // ===== VIVO =====
-            "vivo x90 pro": { inch: 6.78, hz: 120, touch: 300, ppi: 453 },
-            "vivo x80": { inch: 6.78, hz: 120, touch: 300, ppi: 388 },
-            "vivo v27": { inch: 6.78, hz: 120, touch: 300, ppi: 388 },
-            "vivo v25": { inch: 6.44, hz: 90, touch: 180, ppi: 409 },
-            "vivo y35": { inch: 6.58, hz: 90, touch: 180, ppi: 401 },
-            "vivo y22": { inch: 6.55, hz: 60, touch: 60, ppi: 268 },
-            "vivo y21": { inch: 6.51, hz: 60, touch: 60, ppi: 270 },
-            "vivo y15": { inch: 6.35, hz: 60, touch: 60, ppi: 268 },
-            "vivo y17": { inch: 6.35, hz: 60, touch: 60, ppi: 268 },
-            "vivo y33": { inch: 6.58, hz: 90, touch: 180, ppi: 401 },
-            "vivo y36": { inch: 6.64, hz: 90, touch: 180, ppi: 395 },
-            "vivo y02": { inch: 6.51, hz: 60, touch: 60, ppi: 270 },
-            "vivo iqoo 11": { inch: 6.78, hz: 144, touch: 300, ppi: 517 },
-            "vivo iqoo 9": { inch: 6.78, hz: 120, touch: 300, ppi: 388 },
-            "vivo iqoo neo 7": { inch: 6.78, hz: 120, touch: 360, ppi: 388 },
-            // ===== ASUS =====
-            "asus rog phone 7": { inch: 6.78, hz: 165, touch: 720, ppi: 395 },
-            "asus rog phone 6": { inch: 6.78, hz: 165, touch: 720, ppi: 395 },
-            "asus rog phone 5": { inch: 6.78, hz: 144, touch: 300, ppi: 395 },
-            "asus rog phone 3": { inch: 6.59, hz: 144, touch: 270, ppi: 391 },
-            "asus zenfone 10": { inch: 5.9, hz: 144, touch: 300, ppi: 445 },
-            "asus zenfone 9": { inch: 5.9, hz: 120, touch: 240, ppi: 445 },
-            // ===== ONEPLUS =====
-            "oneplus 11": { inch: 6.7, hz: 120, touch: 360, ppi: 525 },
-            "oneplus 10 pro": { inch: 6.7, hz: 120, touch: 360, ppi: 525 },
-            "oneplus 9 pro": { inch: 6.7, hz: 120, touch: 360, ppi: 525 },
-            "oneplus nord 3": { inch: 6.74, hz: 120, touch: 360, ppi: 451 },
-            "oneplus nord ce 3": { inch: 6.7, hz: 120, touch: 240, ppi: 394 },
-            "oneplus nord n20": { inch: 6.43, hz: 60, touch: 60, ppi: 409 },
-            // ===== HUAWEI =====
-            "huawei p60 pro": { inch: 6.67, hz: 120, touch: 300, ppi: 444 },
-            "huawei p50": { inch: 6.5, hz: 90, touch: 300, ppi: 458 },
-            "huawei nova 11": { inch: 6.7, hz: 120, touch: 300, ppi: 395 },
-            "huawei nova 10": { inch: 6.67, hz: 120, touch: 300, ppi: 395 },
-            "huawei nova 9": { inch: 6.57, hz: 120, touch: 300, ppi: 392 },
-            "huawei nova 8": { inch: 6.57, hz: 90, touch: 240, ppi: 392 },
-            // ===== TECNO =====
-            "tecno spark 10 pro": { inch: 6.8, hz: 90, touch: 180, ppi: 263 },
-            "tecno spark 10": { inch: 6.6, hz: 90, touch: 180, ppi: 267 },
-            "tecno spark 9": { inch: 6.6, hz: 60, touch: 60, ppi: 266 },
-            "tecno camon 20": { inch: 6.67, hz: 60, touch: 60, ppi: 395 },
-            "tecno pova 4": { inch: 6.82, hz: 90, touch: 180, ppi: 257 },
-            "tecno pova 3": { inch: 6.9, hz: 90, touch: 180, ppi: 255 },
-            // ===== INFINIX =====
-            "infinix hot 30": { inch: 6.78, hz: 90, touch: 180, ppi: 260 },
-            "infinix hot 20": { inch: 6.82, hz: 90, touch: 180, ppi: 257 },
-            "infinix note 30": { inch: 6.78, hz: 120, touch: 240, ppi: 396 },
-            "infinix note 12": { inch: 6.7, hz: 60, touch: 60, ppi: 393 },
-            "infinix zero 5g": { inch: 6.67, hz: 120, touch: 240, ppi: 395 },
-            "infinix smart 7": { inch: 6.6, hz: 60, touch: 60, ppi: 267 },
-            // ===== ITEL =====
-            "itel a60": { inch: 6.6, hz: 60, touch: 60, ppi: 267 },
-            "itel a58": { inch: 6.6, hz: 60, touch: 60, ppi: 267 },
-            "itel p40": { inch: 6.6, hz: 60, touch: 60, ppi: 267 },
-            "itel s23": { inch: 6.6, hz: 60, touch: 60, ppi: 267 },
-            "itel vision 5": { inch: 6.6, hz: 60, touch: 60, ppi: 267 },
-            // ===== NOKIA =====
-            "nokia g21": { inch: 6.5, hz: 90, touch: 180, ppi: 270 },
-            "nokia g11": { inch: 6.5, hz: 90, touch: 180, ppi: 270 },
-            "nokia c31": { inch: 6.75, hz: 60, touch: 60, ppi: 262 },
-            "nokia x30": { inch: 6.43, hz: 90, touch: 180, ppi: 409 },
-            "nokia x20": { inch: 6.67, hz: 90, touch: 180, ppi: 395 }
-        };
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        // ============================================================
-        // CÔNG THỨC TÍNH ĐỘ NHẠY TỪ THÔNG SỐ KỸ THUẬT
-        // ============================================================
-        // Công thức dựa trên logic:
-        // - Màn hình càng lớn -> cần độ nhạy thấp hơn (vì tay di chuyển xa hơn)
-        // - Tần số quét càng cao -> cần độ nhạy cao hơn (vì mượt hơn, phản hồi nhanh)
-        // - Touch sampling càng cao -> cần độ nhạy cao hơn
-        // - PPI càng cao -> cần độ nhạy thấp hơn chút (vì điểm ảnh nhỏ, di chuyển chính xác hơn)
+        <!-- Tiêu đề APP ĐỘ NHẠY -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="APP ĐỘ NHẠY - BLUE EDITION"
+            android:textColor="#00FFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
 
-        function calculateSensitivity(spec) {
-            // Chuẩn hóa các thông số
-            const inchFactor = 7.0 / spec.inch; // Màn 7 inch là chuẩn, nhỏ hơn thì tăng, lớn hơn thì giảm
-            const hzFactor = spec.hz / 60;       // 60Hz là chuẩn
-            const touchFactor = spec.touch / 60; // 60Hz touch là chuẩn
-            const ppiFactor = 400 / spec.ppi;    // 400 PPI là chuẩn
+        <!-- Chọn Máy (Spinner) -->
+        <Spinner
+            android:id="@+id/spinnerDevice"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_input"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp"/>
 
-            // Tính hệ số tổng hợp
-            const totalFactor = inchFactor * (1 + (hzFactor - 1) * 0.3) * (1 + (touchFactor - 1) * 0.2) * (1 + (ppiFactor - 1) * 0.1);
+        <!-- Nút LẤY ĐỘ NHẠY FREE -->
+        <Button
+            android:id="@+id/btnGetFree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LẤY ĐỘ NHẠY FREE"
+            android:backgroundTint="#FF00FF"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
 
-            // Base sensitivity (mức trung bình cho máy 60Hz, 6.5 inch)
-            const baseLook = 175;
-            const baseRed = 148;
-            const baseX2 = 170;
-            const baseX4 = 180;
-            const baseSniper = 172;
-            const baseCam = 130;
-            const baseFire = 40;
-            const baseDpi = 400;
+        <!-- Nút ĐẶT LẠI -->
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ĐẶT LẠI"
+            android:backgroundTint="#1E3A8A"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="24dp"/>
 
-            // Áp dụng hệ số và làm tròn
-            return {
-                lookAround: Math.round(Math.min(200, Math.max(120, baseLook * totalFactor))),
-                redDot: Math.round(Math.min(200, Math.max(100, baseRed * totalFactor))),
-                scope2x: Math.round(Math.min(200, Math.max(110, baseX2 * totalFactor))),
-                scope4x: Math.round(Math.min(200, Math.max(120, baseX4 * totalFactor))),
-                sniperScope: Math.round(Math.min(200, Math.max(110, baseSniper * totalFactor))),
-                camera: Math.round(Math.min(200, Math.max(80, baseCam * totalFactor))),
-                fireButton: Math.round(Math.min(100, Math.max(20, baseFire * totalFactor))),
-                dpi: Math.round(Math.min(600, Math.max(200, baseDpi * totalFactor)))
-            };
-        }
+        <!-- Tiêu đề Premium -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ĐỘ NHẠY PREMIUM"
+            android:textColor="#FF00FF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
-        // Tạo database độ nhạy từ specs
-        const allDevices = {};
-        for (let name in deviceSpecs) {
-            allDevices[name] = calculateSensitivity(deviceSpecs[name]);
-        }
+        <!-- Các thanh trượt (Slider) -->
+        <TextView android:text="Nhìn Xung Quanh" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <SeekBar android:id="@+id/sbLook" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="180" android:progressTint="#00FFFF"/>
 
-        // Đổ dữ liệu vào datalist gợi ý
-        const datalist = document.getElementById('deviceList');
-        Object.keys(allDevices).sort().forEach(key => {
-            let option = document.createElement('option');
-            option.value = key;
-            datalist.appendChild(option);
-        });
+        <TextView android:text="Ống Ngắm Hồng Tâm" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
+        <SeekBar android:id="@+id/sbRedDot" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="152" android:progressTint="#00FFFF"/>
 
-        function getSensitivity() {
-            const inputVal = document.getElementById('deviceInput').value.trim().toLowerCase();
-            const resultPanel = document.getElementById('resultPanel');
-            const slidersContainer = document.getElementById('slidersContainer');
-            const timeStamp = document.getElementById('timeStamp');
-            const deviceNameDisplay = document.getElementById('deviceNameDisplay');
-            const specInfo = document.getElementById('specInfo');
+        <TextView android:text="Ống Ngắm X2" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
+        <SeekBar android:id="@+id/sbX2" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="179" android:progressTint="#00FFFF"/>
 
-            if (!inputVal) { alert("Vui lòng nhập tên máy!"); return; }
+        <TextView android:text="Ống Ngắm X4" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
+        <SeekBar android:id="@+id/sbX4" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="186" android:progressTint="#00FFFF"/>
 
-            let deviceData = null;
-            let foundName = "";
-            let specData = null;
+        <TextView android:text="Ống Ngắm Súng Ngắm" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
+        <SeekBar android:id="@+id/sbSniper" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="177" android:progressTint="#00FFFF"/>
 
-            // Tìm chính xác
-            if (allDevices[inputVal]) {
-                deviceData = allDevices[inputVal];
-                specData = deviceSpecs[inputVal];
-                foundName = inputVal;
-            } else {
-                // Tìm gần đúng
-                for (let key in allDevices) {
-                    if (key.includes(inputVal) || inputVal.includes(key)) {
-                        deviceData = allDevices[key];
-                        specData = deviceSpecs[key];
-                        foundName = key;
-                        break;
-                    }
-                }
-            }
+        <TextView android:text="Camera Nhìn Xung Quanh" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
+        <SeekBar android:id="@+id/sbCam" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="135" android:progressTint="#00FFFF"/>
 
-            if (!deviceData) {
-                alert("Không tìm thấy máy: " + inputVal + "\nVui lòng thử máy khác trong danh sách gợi ý.");
-                return;
-            }
+        <!-- Nút Bấm và DPI -->
+        <TextView android:text="Nút Bấm: 40%" android:textColor="#FF00FF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp"/>
+        <TextView android:text="DPI SENSITIVITY: 400" android:textColor="#00FFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
 
-            deviceNameDisplay.innerText = foundName.toUpperCase();
-            slidersContainer.innerHTML = '';
-            const now = new Date();
-            timeStamp.innerText = now.toLocaleTimeString('vi-VN') + ' | ' + now.toLocaleDateString('vi-VN');
-            
-            // Hiển thị thông số kỹ thuật
-            if (specData) {
-                specInfo.innerText = `Màn hình: ${specData.inch}" | ${specData.hz}Hz | Touch: ${specData.touch}Hz | PPI: ${specData.ppi}`;
-            } else {
-                specInfo.innerText = '';
-            }
-
-            const displayOrder = [
-                { key: 'lookAround', label: '👁️ Nhìn Xung Quanh', max: 200 },
-                { key: 'redDot', label: '🔴 Ống Ngắm Hồng Tâm', max: 200 },
-                { key: 'scope2x', label: '🔭 Ống Ngắm X2', max: 200 },
-                { key: 'scope4x', label: '🔭 Ống Ngắm X4', max: 200 },
-                { key: 'sniperScope', label: '🎯 Ống Ngắm Súng Ngắm', max: 200 },
-                { key: 'camera', label: '📷 Camera Nhìn Xung Quanh', max: 200 },
-                { key: 'fireButton', label: '🔥 Nút Bắn', max: 100 },
-                { key: 'dpi', label: '⚙️ DPI SENSITIVITY', max: 600 }
-            ];
-
-            displayOrder.forEach(item => {
-                const value = deviceData[item.key];
-                const percentage = Math.min((value / item.max) * 100, 100);
-                slidersContainer.innerHTML += `
-                    <div class="slider-item">
-                        <div class="slider-info">
-                            <span>${item.label}</span>
-                            <span class="slider-value">${value}</span>
-                        </div>
-                        <div class="slider-bar">
-                            <div class="slider-fill" style="width: 0%;" data-target="${percentage}%"></div>
-                        </div>
-                    </div>`;
-            });
-
-            resultPanel.style.display = 'block';
-            setTimeout(() => {
-                document.querySelectorAll('.slider-fill').forEach(fill => {
-                    fill.style.width = fill.getAttribute('data-target');
-                });
-            }, 100);
-        }
-
-        function resetForm() {
-            document.getElementById('deviceInput').value = '';
-            document.getElementById('resultPanel').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
+    </LinearLayout>
+</ScrollView>
