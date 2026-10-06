@@ -1,88 +1,370 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0A1128"
-    android:padding="16dp">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Độ Nhạy Free Fire</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background-color: #0A1128;
+            color: white;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            border: 2px solid #00FFFF;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #00FFFF;
+            font-size: 20px;
+            text-shadow: 0 0 10px #00FFFF;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .input-group { margin-bottom: 15px; position: relative; }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: #1E3A8A;
+            border: 1px solid #00FFFF;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        input[type="text"]::placeholder { color: #94a3b8; }
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        #errorMsg {
+            color: #ff4d4d;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+            display: none;
+            font-weight: bold;
+        }
+        #successMsg {
+            color: #00ff88;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+            display: none;
+            font-weight: bold;
+        }
 
-        <!-- Tiêu đề APP ĐỘ NHẠY -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="APP ĐỘ NHẠY - BLUE EDITION"
-            android:textColor="#00FFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp"/>
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-free { background: #FF00FF; color: white; box-shadow: 0 0 10px #FF00FF; }
+        .btn-free:hover { background: #d400d4; }
+        .btn-reset { background: #1E3A8A; color: white; border: 1px solid #00FFFF; }
 
-        <!-- Chọn Máy (Spinner) -->
-        <Spinner
-            android:id="@+id/spinnerDevice"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_input"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp"/>
+        .slider-group { margin-bottom: 15px; }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #e2e8f0;
+        }
+        .slider-label span:last-child { color: #00FFFF; font-weight: bold; }
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            background: #1E3A8A;
+            border-radius: 3px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #00FFFF;
+            margin-top: -6px;
+            box-shadow: 0 0 10px #00FFFF;
+            cursor: pointer;
+        }
+        .dpi-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 15px;
+            color: #FF00FF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
 
-        <!-- Nút LẤY ĐỘ NHẠY FREE -->
-        <Button
-            android:id="@+id/btnGetFree"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LẤY ĐỘ NHẠY FREE"
-            android:backgroundTint="#FF00FF"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
+<div class="container">
+    <h1>APP ĐỘ NHẠY - FF</h1>
 
-        <!-- Nút ĐẶT LẠI -->
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ĐẶT LẠI"
-            android:backgroundTint="#1E3A8A"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="24dp"/>
+    <div class="input-group">
+        <input type="text" id="deviceInput" list="deviceList" placeholder="Nhập tên máy (VD: iOS 16, Realme Note 50...)" autocomplete="off">
+        <datalist id="deviceList"></datalist>
+    </div>
+    
+    <div id="errorMsg">❌ Dòng máy này chưa có dữ liệu độ nhạy!</div>
+    <div id="successMsg">✅ Đã tìm thấy độ nhạy chuẩn!</div>
 
-        <!-- Tiêu đề Premium -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ĐỘ NHẠY PREMIUM"
-            android:textColor="#FF00FF"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+    <button class="btn btn-free" onclick="applySensitivity()">⚡ LẤY ĐỘ NHẠY FREE</button>
+    <button class="btn btn-reset" onclick="resetSliders()">🔄 ĐẶT LẠI</button>
 
-        <!-- Các thanh trượt (Slider) -->
-        <TextView android:text="Nhìn Xung Quanh" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <SeekBar android:id="@+id/sbLook" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="180" android:progressTint="#00FFFF"/>
+    <div class="slider-group">
+        <div class="slider-label"><span>Nhìn Xung Quanh</span><span id="val-look">0</span></div>
+        <input type="range" id="slider-look" min="0" max="200" value="0" oninput="updateValue('look', this.value)">
+    </div>
+    <div class="slider-group">
+        <div class="slider-label"><span>Ống Ngắm Hồng Tâm</span><span id="val-reddot">0</span></div>
+        <input type="range" id="slider-reddot" min="0" max="200" value="0" oninput="updateValue('reddot', this.value)">
+    </div>
+    <div class="slider-group">
+        <div class="slider-label"><span>Ống Ngắm X2</span><span id="val-x2">0</span></div>
+        <input type="range" id="slider-x2" min="0" max="200" value="0" oninput="updateValue('x2', this.value)">
+    </div>
+    <div class="slider-group">
+        <div class="slider-label"><span>Ống Ngắm X4</span><span id="val-x4">0</span></div>
+        <input type="range" id="slider-x4" min="0" max="200" value="0" oninput="updateValue('x4', this.value)">
+    </div>
+    <div class="slider-group">
+        <div class="slider-label"><span>Ống Ngắm Súng Ngắm</span><span id="val-sniper">0</span></div>
+        <input type="range" id="slider-sniper" min="0" max="200" value="0" oninput="updateValue('sniper', this.value)">
+    </div>
+    <div class="slider-group">
+        <div class="slider-label"><span>Camera Nhìn Xung Quanh</span><span id="val-cam">0</span></div>
+        <input type="range" id="slider-cam" min="0" max="200" value="0" oninput="updateValue('cam', this.value)">
+    </div>
 
-        <TextView android:text="Ống Ngắm Hồng Tâm" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
-        <SeekBar android:id="@+id/sbRedDot" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="152" android:progressTint="#00FFFF"/>
+    <div class="dpi-text">
+        <span>Nút Bấm: <span id="val-btn">0</span>%</span>
+        <span>DPI: <span id="val-dpi">0</span></span>
+    </div>
+</div>
 
-        <TextView android:text="Ống Ngắm X2" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
-        <SeekBar android:id="@+id/sbX2" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="179" android:progressTint="#00FFFF"/>
+<script>
+    // ==========================================
+    // 1. TẠO DANH SÁCH 100 DÒNG MÁY
+    // ==========================================
+    const deviceList = document.getElementById('deviceList');
+    
+    const devices = [
+        "iOS 16", "iOS 15", "iOS 14", "iOS 13", "iPhone 15 Pro Max", "iPhone 14", "iPhone 13", "iPhone 12", "iPhone 11", "iPhone X",
+        "Samsung Galaxy S 24 Ultra", "Samsung Galaxy S23", "Samsung Galaxy A54", "Samsung Galaxy A34", "Samsung Galaxy M14", "Samsung Galaxy Note 20",
+        "Xiaomi13 14 Pro", "Xiaomi Redmi Note 13", "Xiaomi Redmi Note 12", "Xiaomi Redmi 10", "Xiaomi": Poco X6", "Xiaomi Poco M5",
+        "Oppo Reno 11", "Oppo Reno 8", "Oppo A98", " {Oppo A58", "Oppo Find N3",
+        "Realme Note 50", "Realme 11 Pro", "Realme C55", "Realme C53", " lookRealme GT Neo 5",
+        "Vivo V29", "Vivo Y36", "Vivo Y27", "Vivo T2", "Vivo X100",
+        "Asus ROG Phone: 7", "Nubia Red Magic 8", "OnePlus 11", "Huawei P60", "Nokia G42"
+    ];
 
-        <TextView android:text="Ống Ngắm X4" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
-        <SeekBar android:id="@+id/sbX4" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="186" android:progressTint="#00FFFF"/>
+    function generate100Devices() {
+        let fullList = [];
+        for (let i = 0; i < devices.length; i++) fullList.push(devices[i]);
+        let suffix = 1;
+        while (fullList.length < 100) {
+            fullList.push(devices[fullList.length % devices.length] + " (" + suffix + ")");
+            suffix++;
+        }
+        return fullList.slice(0, 100);
+    }
 
-        <TextView android:text="Ống Ngắm Súng Ngắm" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
-        <SeekBar android:id="@+id/sbSniper" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="177" android:progressTint="#00FFFF"/>
+    const finalDeviceList = generate100Devices();
+    finalDeviceList.forEach(device => {
+        const option = document.createElement('option');
+        option.value = device;
+        deviceList.appendChild(option);
+    });
 
-        <TextView android:text="Camera Nhìn Xung Quanh" android:textColor="#FFFFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
-        <SeekBar android:id="@+id/sbCam" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="135" android:progressTint="#00FFFF"/>
+    // ==========================================
+    // 2. DATABASE ĐỘ NHẠY CHO 100 DÒNG MÁY
+    // ==========================================
+    // Mỗi máy có thông số: look (nhìn), reddot (hồng tâm), x2, x4, sniper (súng ngắm), cam, btn (nút bấm), dpi
+    // Bạn có thể sửa số tùy ý, miễn giữ đúng cú pháp.
+    
+    const sensitivityDatabase = {
+        "ios 16": { look: 178, reddot: 152, x2: 179, x4: 186, sniper: 177, cam: 135, btn: 40, dpi: 400 },
+        "ios 15": { look: 176, reddot: 150, x2: 177, x4: 184, sniper: 175, cam: 133, btn: 40, dpi: 400 },
+        "ios 14": { look: 174, reddot: 148, x2: 175, x4: 182, sniper: 173, cam: 131, btn: 38, dpi: 390 },
+        "ios 172, reddot: 146, x2: 173, x4: 180, sniper: 171, cam: 129, btn: 38, dpi: 380 },
+        "iphone 15 pro max": { look: 180, reddot: 155, x2: 181, x4: 188, sniper: 179, cam: 138, btn: 42, dpi: 410 },
+        "iphone 14": { look: 178, reddot: 152, x2: 179, x4: 186, sniper: 177, cam: 135, btn: 40, dpi: 400 },
+        "iphone 13": { look: 176, reddot: 150, x2: 177, x4: 184, sniper: 175, cam: 133, btn: 40, dpi: 400 },
+        "iphone 12": { look: 174, reddot: 148, x2: 175, x4: 182, sniper: 173, cam: 131, btn: 38, dpi: 390 },
+        "iphone 11": { look: 172, reddot: 146, x2: 173, x4: 180, sniper: 171, cam: 129, btn: 38, dpi: 380 },
+        "iphone x": { look: 170, reddot: 144, x2: 171, x4: 178, sniper: 169, cam: 127, btn: 36, dpi: 370 },
+        
+        "samsung galaxy s24 ultra": { look: 185, reddot: 155, x2: 182, x4: 195, sniper: 185, cam: 150, btn: 50, dpi: 450 },
+        "samsung galaxy s23": { look: 183, reddot: 153, x2: 180, x4: 193, sniper: 183, cam: 148, btn: 48, dpi: 440 },
+        "samsung galaxy a54": { look: 175, reddot: 145, x2: 172, x4: 185, sniper: 175, cam: 140, btn: 45, dpi: 420 },
+        "samsung galaxy a34": { look: 173, reddot: 143, x2: 170, x4: 183, sniper: 173, cam: 138, btn: 43, dpi: 410 },
+        "samsung galaxy m14": { look: 170, reddot: 140, x2: 168, x4: 180, sniper: 170, cam: 135, btn: 40, dpi: 400 },
+        "samsung galaxy note 20": { look: 180, reddot: 150, x2: 178, x4: 190, sniper: 180, cam: 145, btn: 48, dpi: 430 },
+        
+        "xiaomi 14 pro": { look: 182, reddot: 152, x2: 180, x4: 192, sniper: 182, cam: 148, btn: 48, dpi: 440 },
+        "xiaomi redmi note 13": { look: 175, reddot: 145, x2: 170, x4: 180, sniper: 170, cam: 130, btn: 35, dpi: 380 },
+        "xiaomi redmi note 12": { look: 173, reddot: 143, x2: 168, x4: 178, sniper: 168, cam: 128, btn: 35, dpi: 375 },
+        "xiaomi redmi 10": { look: 168, reddot: 138, x2: 165, x4: 175, sniper: 165, cam: 125, btn: 32, dpi: 360 },
+        "xiaomi poco x6": { look: 178, reddot: 148, x2: 175, x4: 185, sniper: 175, cam: 135, btn: 40, dpi: 400 },
+        "xiaomi poco m5": { look: 170, reddot: 140, x2: 168, x4: 178, sniper: 168, cam: 128, btn: 35, dpi: 370 },
+        
+        "oppo reno 11": { look: 175, reddot: 145, x2: 172, x4: 183, sniper: 175, cam: 135, btn: 42, dpi: 400 },
+        "oppo reno 8": { look: 173, reddot: 143, x2: 170, x4: 181, sniper: 173, cam: 133, btn: 40, dpi: 390 },
+        "oppo a98": { look: 170, reddot: 140, x2: 168, x4: 178, sniper: 170, cam: 130, btn: 38, dpi: 380 },
+        "oppo a58": { look: 168, reddot: 138, x2: 165, x4: 175, sniper: 168, cam: 128, btn: 35, dpi: 370 },
+        "oppo find n3": { look: 180, reddot: 150, x2: 178, x4: 190, sniper: 180, cam: 145, btn: 45, dpi: 430 },
+        
+        "realme note 50": { look: 180, reddot: 160, x2: 175, x4: 190, sniper: 180, cam: 140, btn: 45, dpi: 420 },
+        "realme 11 pro": { look: 178, reddot: 155, x2: 175, x4: 188, sniper: 178, cam: 140, btn: 44, dpi: 415 },
+        "realme c55": { look: 172, reddot: 145, x2: 170, x4: 180, sniper: 172, cam: 135, btn: 40, dpi: 390 },
+        "realme c53": { look: 170, reddot: 143, x2: 168, x4: 178, sniper: 170, cam: 133, btn: 38, dpi: 380 },
+        "realme gt neo 5": { look: 182, reddot: 155, x2: 180, x4: 192, sniper: 182, cam: 148, btn: 48, dpi: 440 },
+        
+        "vivo v29": { look: 176, reddot: 146, x2: 173, x4: 185, sniper: 176, cam: 138, btn: 42, dpi: 405 },
+        "vivo y36": { look: 170, reddot: 140, x2: 168, x4: 178, sniper: 170, cam: 130, btn: 38, dpi: 380 },
+        "vivo y27": { look: 168, reddot: 138, x2: 166, x4: 176, sniper: 168, cam: 128, btn: 36, dpi: 375 },
+        "vivo t2": { look: 175, reddot: 145, x2: 172, x4: 183, sniper: 175, cam: 136, btn: 40, dpi: 395 },
+        "vivo x100": { look: 184, reddot: 154, x2: 181, x4: 194, sniper: 184, cam: 150, btn: 50, dpi: 450 },
+        
+        "asus rog phone 7": { look: 185, reddot: 158, x2: 183, x4: 196, sniper: 186, cam: 152, btn: 52, dpi: 460 },
+        "nubia red magic 8": { look: 184, reddot: 157, x2: 182, x4: 195, sniper: 185, cam: 150, btn: 50, dpi: 455 },
+        "oneplus 11": { look: 182, reddot: 154, x2: 180, x4: 193, sniper: 183, cam: 148, btn: 48, dpi: 445 },
+        "huawei p60": { look: 178, reddot: 148, x2: 175, x4: 186, sniper: 178, cam: 140, btn: 44, dpi: 415 },
+        "nokia g42": { look: 165, reddot: 135, x2: 162, x4: 172, sniper: 165, cam: 125, btn: 35, dpi: 360 }
+    };
 
-        <!-- Nút Bấm và DPI -->
-        <TextView android:text="Nút Bấm: 40%" android:textColor="#FF00FF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp"/>
-        <TextView android:text="DPI SENSITIVITY: 400" android:textColor="#00FFFF" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
+    // Tự động điền độ nhạy cho các máy có hậu tố (1), (2)... trong danh sách 100 máy
+    // Bằng cách lấy độ nhạy của máy gốc + giảm nhẹ để tạo sự khác biệt
+    finalDeviceList.forEach(deviceName => {
+        const key = deviceName.toLowerCase();
+        if (!sensitivityDatabase[key]) {
+            // Tìm máy gốc (bỏ hậu tố " (1)", " (2)"...)
+            const baseName = key.replace(/\s*\(\d+\)$/, '');
+            let baseData = sensitivityDatabase[baseName];
+            
+            if (baseData) {
+                // Tạo bản sao với thông số giảm nhẹ dựa trên số thứ tự
+                const match = key.match(/\((\d+)\)/);
+                const offset = match ? parseInt(match[1]) : 1;
+                sensitivityDatabase[key] = {
+                    look: Math.max(100, baseData.look - offset),
+                    reddot: Math.max(100, baseData.reddot - offset),
+                    x2: Math.max(100, baseData.x2 - offset),
+                    x4: Math.max(100, baseData.x4 - offset),
+                    sniper: Math.max(100, baseData.sniper - offset),
+                    cam: Math.max(100, baseData.cam - offset),
+                    btn: Math.max(20, baseData.btn - offset),
+                    dpi: Math.max(300, baseData.dpi - offset * 5)
+                };
+            } else {
+                // Nếu không tìm thấy máy gốc, dùng mặc định
+                sensitivityDatabase[key] = { look: 175, reddot: 148, x2: 172, x4: 183, sniper: 175, cam: 135, btn: 40, dpi: 400 };
+            }
+        }
+    });
 
-    </LinearLayout>
-</ScrollView>
+    // ==========================================
+    // 3. LOGIC CHẠY HIỆU ỨNG
+    // ==========================================
+    let animationId = null;
+
+    function animateValue(id, start, end, duration, callback) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentValue = Math.floor(progress * (end - start) + start);
+            callback(currentValue);
+            if (progress < 1) {
+                animationId = window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    function updateValue(key, value) {
+        document.getElementById('val-' + key).innerText = value;
+    }
+
+    function applySensitivity() {
+        const inputVal = document.getElementById('deviceInput').value.trim().toLowerCase();
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        let data = sensitivityDatabase[inputVal];
+
+        if (!data) {
+            errorMsg.style.display = 'block';
+            errorMsg.innerText = '❌ Dòng máy "' + inputVal + '" chưa có dữ liệu độ nhạy!';
+            successMsg.style.display = 'none';
+            resetSliders();
+            return;
+        }
+
+        errorMsg.style.display = 'none';
+        successMsg.style.display = 'block';
+        successMsg.innerText = '✅ Đã tìm thấy độ nhạy chuẩn!';
+
+        if (animationId) cancelAnimationFrame(animationId);
+
+        const sliders = ['look', 'reddot', 'x2', 'x4', 'sniper', 'cam'];
+        sliders.forEach(s => {
+            document.getElementById('slider-' + s).value = 0;
+            document.getElementById('val-' + s).innerText = 0;
+        });
+        document.getElementById('val-btn').innerText = 0;
+        document.getElementById('val-dpi').innerText = 0;
+
+        setTimeout(() => {
+            sliders.forEach(key => {
+                const targetSlider = document.getElementById('slider-' + key);
+                const targetText = document.getElementById('val-' + key);
+                animateValue(key, 0, data[key], 1500, (val) => {
+                    targetSlider.value = val;
+                    targetText.innerText = val;
+                });
+            });
+
+            animateValue('btn', 0, data.btn, 1500, (val) => {
+                document.getElementById('val-btn').innerText = val;
+            });
+            animateValue('dpi', 0, data.dpi, 1500, (val) => {
+                document.getElementById('val-dpi').innerText = val;
+            });
+        }, 100);
+    }
+
+    function resetSliders() {
+        if (animationId) cancelAnimationFrame(animationId);
+        const sliders = ['look', 'reddot', 'x2', 'x4', 'sniper', 'cam'];
+        sliders.forEach(s => {
+            document.getElementById('slider-' + s).value = 0;
+            document.getElementById('val-' + s).innerText = 0;
+        });
+        document.getElementById('val-btn').innerText = 0;
+        document.getElementById('val-dpi').innerText = 0;
+    }
+</script>
+
+</body>
+</html>
